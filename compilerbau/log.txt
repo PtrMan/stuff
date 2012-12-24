@@ -1,0 +1,359 @@
+Type: KEYWORD
+const
+Line   : 1
+Column : 0
+===
+Type: IDENTIFIER
+m
+Line   : 2
+Column : 2
+===
+Type: OPERATION
+Operation: EQUAL
+Line   : 2
+Column : 4
+===
+Type: NUMBER
+7
+Line   : 2
+Column : 7
+===
+Type: OPERATION
+Operation: COMMA
+Line   : 2
+Column : 8
+===
+Type: IDENTIFIER
+n
+Line   : 3
+Column : 2
+===
+Type: OPERATION
+Operation: EQUAL
+Line   : 3
+Column : 4
+===
+Type: NUMBER
+85
+Line   : 3
+Column : 6
+===
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 3
+Column : 8
+===
+Type: KEYWORD
+var
+Line   : 5
+Column : 0
+===
+Type: IDENTIFIER
+x
+Line   : 6
+Column : 2
+===
+Type: OPERATION
+Operation: COMMA
+Line   : 6
+Column : 3
+===
+Type: IDENTIFIER
+y
+Line   : 6
+Column : 5
+===
+Type: OPERATION
+Operation: COMMA
+Line   : 6
+Column : 6
+===
+Type: IDENTIFIER
+z
+Line   : 6
+Column : 8
+===
+Type: OPERATION
+Operation: COMMA
+Line   : 6
+Column : 9
+===
+Type: IDENTIFIER
+q
+Line   : 6
+Column : 11
+===
+Type: OPERATION
+Operation: COMMA
+Line   : 6
+Column : 12
+===
+Type: IDENTIFIER
+r
+Line   : 6
+Column : 14
+===
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 6
+Column : 15
+===
+Type: KEYWORD
+procedure
+Line   : 8
+Column : 0
+===
+Type: IDENTIFIER
+multiply
+Line   : 8
+Column : 10
+===
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 8
+Column : 18
+===
+Type: KEYWORD
+var
+Line   : 9
+Column : 0
+===
+Type: IDENTIFIER
+a
+Line   : 9
+Column : 4
+===
+Type: OPERATION
+Operation: COMMA
+Line   : 9
+Column : 5
+===
+Type: IDENTIFIER
+b
+Line   : 9
+Column : 7
+===
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 9
+Column : 8
+===
+Type: KEYWORD
+begin
+Line   : 11
+Column : 0
+===
+Type: IDENTIFIER
+a
+Line   : 12
+Column : 2
+===
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 12
+Column : 4
+===
+Type: IDENTIFIER
+x
+Line   : 12
+Column : 7
+===
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 12
+Column : 8
+===
+Type: IDENTIFIER
+b
+Line   : 13
+Column : 2
+===
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 13
+Column : 4
+===
+Type: IDENTIFIER
+y
+Line   : 13
+Column : 7
+===
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 13
+Column : 8
+===
+Type: IDENTIFIER
+z
+Line   : 14
+Column : 2
+===
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 14
+Column : 4
+===
+Type: NUMBER
+0
+Line   : 14
+Column : 7
+===
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 14
+Column : 8
+===
+Type: KEYWORD
+while
+Line   : 15
+Column : 2
+===
+Type: IDENTIFIER
+b
+Line   : 15
+Column : 8
+===
+Type: OPERATION
+Operation: GREATER
+Line   : 15
+Column : 10
+===
+Type: NUMBER
+0
+Line   : 15
+Column : 12
+===
+Type: KEYWORD
+do
+Line   : 15
+Column : 14
+===
+Type: KEYWORD
+begin
+Line   : 15
+Column : 17
+===
+Type: KEYWORD
+if
+Line   : 16
+Column : 4
+===
+Type: KEYWORD
+odd
+Line   : 16
+Column : 7
+===
+Type: IDENTIFIER
+b
+Line   : 16
+Column : 11
+===
+Type: KEYWORD
+then
+Line   : 16
+Column : 13
+===
+Type: IDENTIFIER
+z
+Line   : 16
+Column : 18
+===
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 16
+Column : 20
+===
+Type: IDENTIFIER
+z
+Line   : 16
+Column : 23
+===
+Type: OPERATION
+Operation: PLUS
+Line   : 16
+Column : 25
+===
+Type: IDENTIFIER
+a
+Line   : 16
+Column : 27
+===
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 16
+Column : 28
+===
+Type: IDENTIFIER
+a
+Line   : 17
+Column : 4
+===
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 17
+Column : 6
+===
+Type: NUMBER
+2
+Line   : 17
+Column : 9
+===
+Type: OPERATION
+Operation: MUL
+Line   : 17
+Column : 11
+===
+Type: IDENTIFIER
+a
+Line   : 17
+Column : 13
+===
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 17
+Column : 14
+===
+Type: IDENTIFIER
+b
+Line   : 18
+Column : 4
+===
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 18
+Column : 6
+===
+Type: IDENTIFIER
+b
+Line   : 18
+Column : 9
+===
+Type: OPERATION
+Operation: DIV
+Line   : 18
+Column : 11
+===
+Type: NUMBER
+2
+Line   : 18
+Column : 13
+===
+Type: KEYWORD
+end
+Line   : 19
+Column : 2
+===
+Type: KEYWORD
+end
+Line   : 20
+Column : 0
+===
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 20
+Column : 3
+===
+Type: EOF
+Line   : 21
+Column : 1
+===

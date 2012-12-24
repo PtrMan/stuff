@@ -1,0 +1,1747 @@
+Negatives:
+Negative 'a := b := c.'
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 0
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 2
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 5
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 7
+===
+Negative 'var a a.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+var
+Line   : 1
+Column : 12
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 16
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 18
+===
+Negative 'var a := b.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+var
+Line   : 1
+Column : 20
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 24
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 26
+===
+Negative 'if a := b then b := c.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+if
+Line   : 1
+Column : 31
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 34
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 36
+===
+Negative 'procedure x; y y.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+procedure
+Line   : 1
+Column : 53
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+x
+Line   : 1
+Column : 63
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 64
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+y
+Line   : 1
+Column : 66
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+y
+Line   : 1
+Column : 68
+===
+Negative 'procedure x; x = y.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+procedure
+Line   : 1
+Column : 70
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+x
+Line   : 1
+Column : 80
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 81
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+x
+Line   : 1
+Column : 83
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 85
+===
+Negative 'procedure if; a := b.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+procedure
+Line   : 1
+Column : 89
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+if
+Line   : 1
+Column : 99
+===
+Negative 'const a =.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 110
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 116
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 118
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 119
+===
+Negative 'const a = b.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 120
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 126
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 128
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 130
+===
+Negative 'const a = b; b = c.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 132
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 138
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 140
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 142
+===
+Negative 'const a = b,'
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 151
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 157
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 159
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 161
+===
+Negative 'var a;a.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+var
+Line   : 1
+Column : 163
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 167
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 168
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 169
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 170
+===
+Negative 'var a,n.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+var
+Line   : 1
+Column : 171
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 175
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: COMMA
+Line   : 1
+Column : 176
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+n
+Line   : 1
+Column : 177
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 178
+===
+Negative 'var x; const a = 5;.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+var
+Line   : 1
+Column : 179
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+x
+Line   : 1
+Column : 183
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 184
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 186
+===
+Negative '..'
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 199
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 200
+===
+Negative 'a := --5.'
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 201
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 203
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: MINUS
+Line   : 1
+Column : 206
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: MINUS
+Line   : 1
+Column : 207
+===
+Negative 'a := 5 + + 7.'
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 210
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 212
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 215
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: PLUS
+Line   : 1
+Column : 217
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: PLUS
+Line   : 1
+Column : 219
+===
+Negative 'a:=5 * * 6.'
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 223
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 224
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 226
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: MUL
+Line   : 1
+Column : 228
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: MUL
+Line   : 1
+Column : 230
+===
+Negative 'a:=6 * +5.'
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 234
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 235
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+6
+Line   : 1
+Column : 237
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: MUL
+Line   : 1
+Column : 239
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: PLUS
+Line   : 1
+Column : 241
+===
+Negative 'if 1 then a := b.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+if
+Line   : 1
+Column : 244
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+1
+Line   : 1
+Column : 247
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+then
+Line   : 1
+Column : 249
+===
+Negative 'call 5.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+call
+Line   : 1
+Column : 261
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 266
+===
+Negative '?.'
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: INPUT
+Line   : 1
+Column : 268
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 269
+===
+Positives:
+Positive '.'
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 270
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 271
+===
+Positive 'const a = 5;.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 271
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 277
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 279
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 281
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 282
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 283
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 284
+===
+Positive 'const a = 5, b = 6;.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 284
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 290
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 292
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 294
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: COMMA
+Line   : 1
+Column : 295
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 297
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 299
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+6
+Line   : 1
+Column : 301
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 302
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 303
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 304
+===
+Positive 'const a = 5, b = 6; var r;.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 304
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 310
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 312
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 314
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: COMMA
+Line   : 1
+Column : 315
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 317
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 319
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+6
+Line   : 1
+Column : 321
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 322
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+var
+Line   : 1
+Column : 324
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 328
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 329
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 330
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 331
+===
+Positive 'const a = 5; var b; a := 5.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 331
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 337
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 339
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 341
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 342
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+var
+Line   : 1
+Column : 344
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 348
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 349
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 351
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 353
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 356
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 357
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 358
+===
+Positive 'const a = 5; var b; a := b.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 358
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 364
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 366
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 368
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 369
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+var
+Line   : 1
+Column : 371
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 375
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 376
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 378
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 380
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 383
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 384
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 385
+===
+Positive 'const a = 5; var b; a := -5.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 385
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 391
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 393
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 395
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 396
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+var
+Line   : 1
+Column : 398
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 402
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 403
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 405
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 407
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: MINUS
+Line   : 1
+Column : 410
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 411
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 412
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 413
+===
+Positive 'const a = 5; var b; a := -5 + z * u / 5 * (h - j).'
+Parser::eatToken called, returned:
+Type: KEYWORD
+const
+Line   : 1
+Column : 413
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 419
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 421
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 423
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 424
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+var
+Line   : 1
+Column : 426
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 430
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 431
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 433
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 435
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: MINUS
+Line   : 1
+Column : 438
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 439
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: PLUS
+Line   : 1
+Column : 441
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+z
+Line   : 1
+Column : 443
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: MUL
+Line   : 1
+Column : 445
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+u
+Line   : 1
+Column : 447
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: DIV
+Line   : 1
+Column : 449
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 451
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: MUL
+Line   : 1
+Column : 453
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: BRACEOPEN
+Line   : 1
+Column : 455
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+h
+Line   : 1
+Column : 456
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: MINUS
+Line   : 1
+Column : 458
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+j
+Line   : 1
+Column : 460
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: BRACECLOSE
+Line   : 1
+Column : 461
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 462
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 463
+===
+Positive 'if odd x then a := 5.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+if
+Line   : 1
+Column : 463
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+odd
+Line   : 1
+Column : 466
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+x
+Line   : 1
+Column : 470
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+then
+Line   : 1
+Column : 472
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 477
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 479
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 482
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 483
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 484
+===
+Positive 'if r = r then a := 5.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+if
+Line   : 1
+Column : 484
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 487
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: EQUAL
+Line   : 1
+Column : 489
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 491
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+then
+Line   : 1
+Column : 493
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 498
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 500
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 503
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 504
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 505
+===
+Positive 'if r # r then a := 5.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+if
+Line   : 1
+Column : 505
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 508
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: UNEQUAL
+Line   : 1
+Column : 510
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 512
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+then
+Line   : 1
+Column : 514
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 519
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 521
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 524
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 525
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 526
+===
+Positive 'if r < r then a := 5.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+if
+Line   : 1
+Column : 526
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 529
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SMALLER
+Line   : 1
+Column : 531
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 533
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+then
+Line   : 1
+Column : 535
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 540
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 542
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 545
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 546
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 547
+===
+Positive 'if r <= r then a := 5.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+if
+Line   : 1
+Column : 547
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 550
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SMALLEREQUAL
+Line   : 1
+Column : 552
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 555
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+then
+Line   : 1
+Column : 557
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 562
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 564
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 567
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 568
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 569
+===
+Positive 'if r > r then a := 5.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+if
+Line   : 1
+Column : 569
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 572
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: GREATER
+Line   : 1
+Column : 574
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 576
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+then
+Line   : 1
+Column : 578
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 583
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 585
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 588
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 589
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 590
+===
+Positive 'if r >= r then a := 5.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+if
+Line   : 1
+Column : 590
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 593
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: GREATEREQUAL
+Line   : 1
+Column : 595
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 598
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+then
+Line   : 1
+Column : 600
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 605
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 607
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 610
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 611
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 612
+===
+Positive 'while 5 > 4 do a := b.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+while
+Line   : 1
+Column : 612
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+5
+Line   : 1
+Column : 618
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: GREATER
+Line   : 1
+Column : 620
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+4
+Line   : 1
+Column : 622
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+do
+Line   : 1
+Column : 624
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 627
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 629
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 632
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 633
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 634
+===
+Positive 'begin a:= b; c := d end.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+begin
+Line   : 1
+Column : 634
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+a
+Line   : 1
+Column : 640
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 641
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+b
+Line   : 1
+Column : 644
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: SEMICOLON
+Line   : 1
+Column : 645
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+c
+Line   : 1
+Column : 647
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: ASSIGNMENT
+Line   : 1
+Column : 649
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+d
+Line   : 1
+Column : 652
+===
+Parser::eatToken called, returned:
+Type: KEYWORD
+end
+Line   : 1
+Column : 654
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 657
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 658
+===
+Positive 'call x.'
+Parser::eatToken called, returned:
+Type: KEYWORD
+call
+Line   : 1
+Column : 658
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+x
+Line   : 1
+Column : 663
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 664
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 665
+===
+Positive '?r.'
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: INPUT
+Line   : 1
+Column : 665
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+r
+Line   : 1
+Column : 666
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 667
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 668
+===
+Positive '!g + 6.'
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: OUTPUT
+Line   : 1
+Column : 668
+===
+Parser::eatToken called, returned:
+Type: IDENTIFIER
+g
+Line   : 1
+Column : 669
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: PLUS
+Line   : 1
+Column : 671
+===
+Parser::eatToken called, returned:
+Type: NUMBER
+6
+Line   : 1
+Column : 673
+===
+Parser::eatToken called, returned:
+Type: OPERATION
+Operation: POINT
+Line   : 1
+Column : 674
+===
+Parser::eatToken called, returned:
+Type: EOF
+Line   : 1
+Column : 675
+===
+Done

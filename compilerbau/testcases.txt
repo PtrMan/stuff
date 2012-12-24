@@ -1,0 +1,22 @@
+must fail
+	a := b := c.
+
+	var a a.
+
+	var a := b.
+
+	if a := b then b := c.
+
+	if if.
+
+	procedure x;
+	y y.
+
+	procedure x;
+	x = y.
+
+	procedure if;
+	a := b.
+
+must succeed:
+	

@@ -1,0 +1,29 @@
+var a,b,Max,Min,i;
+
+procedure p1;
+begin
+  if a>=b then Max:=a;
+  if a< b then Max:=b
+end;
+procedure p2;
+begin
+  if a<=b then Min:=a;
+  if a> b then Min:=b
+end;
+begin
+  !5;
+  ?a;
+  !6;
+  ?b;
+  call p1;
+  call p2;
+  !5;!Min;
+  !5;!Max;,
+  !5;
+  i:=0;
+  while i<=Max do 
+  begin
+    !i;
+    i:=i+1
+  end
+end.
