@@ -2,7 +2,7 @@ class NameListObject
 {
    enum EnumType
    {
-      VARIALBE,
+      VARIABLE,
       CONST,
       PROCEDURE
    }

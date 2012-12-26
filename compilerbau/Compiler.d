@@ -43,29 +43,4 @@ void main(string[] Args)
    {
       writeln(ErrorMessage);
    }
-
-   return;
-   
-   for(;;)
-   {
-      LexerReturnCode = L.getNextToken(CurrentToken);
-      if( LexerReturnCode == Lexer.EnumLexerCode.OK )
-      {
-          // all fine
-      }
-      else
-      {
-         // error
-   
-         writeln("Error: Lexer returned INTERNALERROR");
-         return;
-      }
-      
-      CurrentToken.debugIt();
-      
-      if( (CurrentToken.Type == Token.EnumType.EOF) || (CurrentToken.Type == Token.EnumType.ERROR) )
-      {
-         break;
-      }
-   }
 }
