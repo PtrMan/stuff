@@ -52,13 +52,13 @@ void main(string[] Args)
    Negatives ~= "if 1 then a := b."; // is in c valid
    Negatives ~= "call 5.";
    Negatives ~= "?.";
+   
+   // code gen negatives
 
+   Negatives ~= "const a = 5; var b; a := 5."; // assignment to constant is not allowed
+   
 
-   Positives ~= ".";
-   Positives ~= "const a = 5;.";
-   Positives ~= "const a = 5, b = 6;.";
-   Positives ~= "const a = 5, b = 6; var r;.";
-   Positives ~= "const a = 5; var b; a := 5.";
+   
    Positives ~= "const a = 5; var b; a := b.";
    Positives ~= "const a = 5; var b; a := -5.";
    Positives ~= "const a = 5; var b; a := -5 + z * u / 5 * (h - j)."; // test all? mathematical stuff
@@ -76,6 +76,13 @@ void main(string[] Args)
    Positives ~= "?r.";
    Positives ~= "!g + 6.";
 
+   // code gen positives
+
+   Positives ~= "PROCEDURE p0;VAR a, b;BEGIN a := b;END;.";
+   Positives ~= "const a = 5;.";
+   Positives ~= ".";
+   Positives ~= "const a = 5, b = 6;.";
+   Positives ~= "const a = 5, b = 6; var r;.";
 
    // go through all negatives
    writeln("Negatives:");
