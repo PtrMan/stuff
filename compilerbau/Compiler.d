@@ -41,6 +41,7 @@ void main(string[] Args)
    
    if( !CalleeSuccess )
    {
+      writeln("Error:");
       writeln(ErrorMessage);
    }
 }

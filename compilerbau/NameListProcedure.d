@@ -9,6 +9,8 @@ class NameListProcedure : NameListObject
       this.Parent = null;
       this.MemoryCounter = 0;
       this.Entities = new Hashtable!(string, NameListObject, 16)();
+
+      this.Type = NameListObject.EnumType.PROCEDURE;
    }
 
    public uint ProcedureIndex;

@@ -1,3 +1,5 @@
+import std.file : write;
+
 // for debugging
 import std.stdio : writeln;
 
@@ -71,31 +73,40 @@ class CodeGenerator
    "PUTSTRING",
    "ENDOFCODE"];
 
-   public void writeOpCode(ref bool Success, EnumOpCodes OpCode, int Parameter1 = 0, int Parameter2 = 0, int Parameter3 = 0)
+   this()
    {
-      uint Parameters;
+      this.OutputBytecode ~= 0;
+      this.OutputBytecode ~= 0;
+      this.OutputBytecode ~= 0;
+      this.OutputBytecode ~= 0;
+   }
 
-      Parameters = 0;
+   public void writeOpCode(ref bool Success, EnumOpCodes OpCode, int Parameters[])
+   {
+      uint ParametersI;
+      //uint Parameters;
+
+      //Parameters = 0;
 
       Success = false;
 
       // debug it
       writeln("OpCode=", CodeGenerator.OpCodesString[cast(uint)OpCode]);
 
-      this.write(cast(int)OpCode);
+      this.write1(this.Bytecode, cast(int)OpCode);
 
       switch(OpCode)
       {
          // OpCode with 3 Parameters
          case EnumOpCodes.ENTRYPROC:
-         Parameters = 3;
-         this.write(Parameter3);
+         //Parameters = 3;
+         //this.write2(this.Bytecode, Parameter3);
 
          // OpCode with 2 Parameters
          case EnumOpCodes.PUSHVALVARGLOBAL:
          case EnumOpCodes.PUSHADDRVARGLOBAL:
-         Parameters = 2;
-         this.write(Parameter2);
+         //Parameters = 2;
+         //this.write2(this.Bytecode, Parameter2);
 
          // OpCode with 1 Parameter
 
@@ -107,8 +118,8 @@ class CodeGenerator
          case EnumOpCodes.JMP:
          case EnumOpCodes.JNOT:
          case EnumOpCodes.CALL:
-         Parameters = 1;
-         this.write(Parameter1);
+         //Parameters = 1;
+         //this.write2(this.Bytecode, Parameter1);
 
          Success = true;
          break;
@@ -139,6 +150,7 @@ class CodeGenerator
          // nothing
       }
 
+      /*
       if( Parameters > 0 )
       {
          writeln("   Parameters[0]=", Parameter1);
@@ -147,17 +159,84 @@ class CodeGenerator
       {
          writeln("   Parameters[1]=", Parameter2);
       }
-      if( Parameters == 2 )
+      if( Parameters == 3 )
       {
          writeln("   Parameters[2]=", Parameter3);
       }
+      */
+
+      foreach( int Parameter; Parameters )
+      {
+         this.write2(this.Bytecode, Parameter);
+      }
+
+      // just for debugging
+      ParametersI = 0;
+      foreach( int Parameter; Parameters )
+      {
+         writeln("   Parameters[", ParametersI, "]=", Parameter);
+
+         ParametersI++;
+      }
    }
 
-   private void write(int Data)
+   private void write2(ref ubyte Place[], int Data)
    {
-      this.Bytecode ~= cast(ubyte)Data;
-      this.Bytecode ~= cast(ubyte)(Data >> 8);
+      Place ~= cast(ubyte)Data;
+      Place ~= cast(ubyte)(Data >> 8);
+   }
+
+   private void write1(ref ubyte Place[], int Data)
+   {
+      Place ~= cast(ubyte)Data;
+   }
+
+   public void finishProcedureAndFlush()
+   {
+      uint CodeLength;
+
+      CodeLength = Bytecode.length;
+
+      // write the length of the code into the Bytecodes
+
+      this.Bytecode[1] = cast(ubyte)CodeLength;
+      this.Bytecode[2] = cast(ubyte)(CodeLength >> 8);
+
+      // copy the Bytecode
+      foreach( ubyte Byte; this.Bytecode )
+      {
+         this.OutputBytecode ~= Byte;
+      }
+
+      Bytecode.length = 0; // flush Bytecode
+   }
+
+   public void writeToFile(string Filename, uint NumberOfProcedures, ref ubyte ConstantBlock[])
+   {
+      this.OutputBytecode[0] = cast(ubyte)(NumberOfProcedures);
+      this.OutputBytecode[1] = cast(ubyte)(NumberOfProcedures >> 8);
+      this.OutputBytecode[2] = cast(ubyte)(NumberOfProcedures >> 16);
+      this.OutputBytecode[3] = cast(ubyte)(NumberOfProcedures >> 24);
+
+      /*
+      // append Bytecode
+      foreach( ubyte Byte; this.Bytecode )
+      {
+         this.OutputBytecode ~= Byte;
+      }*/
+
+      // append constantblock
+      foreach( ubyte Byte; ConstantBlock )
+      {
+         this.OutputBytecode ~= Byte;
+      }
+
+      write(Filename, this.OutputBytecode);
+
+      this.OutputBytecode.length = 0;
    }
 
    private ubyte Bytecode[];
+
+   private ubyte OutputBytecode[];
 }

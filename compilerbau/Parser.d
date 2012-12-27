@@ -57,6 +57,42 @@ class Parser
 
    this()
    {
+      void procedureEnd(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         bool CalleeSuccess;
+
+         // TODO< append code? >
+         
+         Success = false;
+
+         // generate Code RETPROC
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.RETPROC, []);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         // write length and append code
+         ParserObj.CodeGen.finishProcedureAndFlush();
+
+         // MAYBE< ??? remove all namelist elements but the first Proceduredescription ??? >
+
+
+         // TODO< nulltest? >
+
+         ParserObj.CurrentProcedure = ParserObj.CurrentProcedure.Parent;
+
+
+
+         writeln("procedureEnd called!");
+
+         Success = true;
+      }
+
+      this.CallbackProcedureEnd = &procedureEnd;
+
       this.fill();
 
       this.Lines ~= new Line();
@@ -75,7 +111,46 @@ class Parser
       }
 
       //////////
-      // Procedure
+      // program
+      //////////
+
+      void programEnd(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         ubyte ConstantArray[];
+         bool CalleeSuccess;
+
+         Success = false;
+
+         ParserObj.CallbackProcedureEnd(ParserObj, CurrentToken, CalleeSuccess, ErrorMessage);
+
+         if( !CalleeSuccess )
+         {
+            return;
+         }
+
+         writeln("Lenght of constant array ", ParserObj.ConstContent.length);
+
+         foreach( int Constant; ParserObj.ConstContent )
+         {
+            int *ConstantPtr;
+
+            ConstantPtr = &Constant;
+
+            ConstantArray ~= (cast(ubyte*)(ConstantPtr))[0];
+            ConstantArray ~= (cast(ubyte*)(ConstantPtr))[1];
+            ConstantArray ~= (cast(ubyte*)(ConstantPtr))[2];
+            ConstantArray ~= (cast(ubyte*)(ConstantPtr))[3];
+         }
+
+         writeln(ConstantArray.length);
+
+         ParserObj.CodeGen.writeToFile("output.cl0", ParserObj.ProcedureCounter, ConstantArray);
+
+         Success = true;
+      }
+
+      //////////
+      // Block
       //////////
 
       void procedureConstA(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
@@ -184,6 +259,8 @@ class Parser
          CreatedProcedure.Parent = ParserObj.CurrentProcedure;
          CreatedProcedure.ProcedureIndex = ParserObj.ProcedureCounter++;
 
+         writeln(ProcedureName, " added");
+
          ParserObj.CurrentProcedure.Entities.add(ProcedureName, CreatedProcedure);
 
          ParserObj.CurrentProcedure = CreatedProcedure;
@@ -191,17 +268,23 @@ class Parser
          Success = true;
       }
 
-      void procedureEnd(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      
+
+      void blockEntry(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
       {
-         // TODO< generate code retProc >
-         // TODO< write codelength >
-         // TODO< append code? >
+         bool CalleeSuccess;
 
-         // MAYBE< ??? remove all namelist elements but the first Proceduredescription ??? >
+         Success = false;
 
-         // TODO< nulltest? >
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.ENTRYPROC, [0, ParserObj.CurrentProcedure.ProcedureIndex, ParserObj.CurrentProcedure.MemoryCounter]);
 
-         ParserObj.CurrentProcedure = ParserObj.CurrentProcedure.Parent;
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         Success = true;
       }
 
 
@@ -212,10 +295,10 @@ class Parser
       void statementAssignmentLeft(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
       {
          string Identifier;
-         NameListProcedure CurrentProcedure;
          bool Found;
          NameListObject FoundNameListObject;
          NameListVariable FoundVariable;
+         NameListProcedure ScopeProcedure;
          bool FoundLocal; // if this is true it means that the variable was found in the local scope
          bool CalleeSuccess;
 
@@ -227,26 +310,7 @@ class Parser
 
          // search the identifier globaly
 
-         CurrentProcedure = ParserObj.CurrentProcedure;
-         Found = false;
-         FoundLocal = true;
-
-         for(;;)
-         {
-            if( CurrentProcedure is null )
-            {
-               break;
-            }
-
-            Found |= CurrentProcedure.Entities.contains(Identifier, FoundNameListObject);
-            if( Found )
-            {
-               break;
-            }
-
-            FoundLocal = false;
-            CurrentProcedure = CurrentProcedure.Parent;
-         }
+         ParserObj.searchIdentifierGlobal(Identifier, FoundNameListObject, FoundLocal, Found, ScopeProcedure);
 
          if( !Found )
          {
@@ -268,7 +332,7 @@ class Parser
 
          if( FoundLocal )
          {
-            ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHADDRVARLOCAL, FoundVariable.Displacement);
+            ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHADDRVARLOCAL, [FoundVariable.Displacement]);
 
             if( !CalleeSuccess )
             {
@@ -278,7 +342,7 @@ class Parser
          }
          else
          {
-            ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHADDRVARGLOBAL, FoundVariable.Displacement, CurrentProcedure.ProcedureIndex);
+            ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHADDRVARGLOBAL, [FoundVariable.Displacement, ScopeProcedure.ProcedureIndex/*CurrentProcedure.ProcedureIndex*/]);
 
             if( !CalleeSuccess )
             {
@@ -296,7 +360,46 @@ class Parser
 
          Success = false;
 
-         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.STOREVAL);
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.STOREVAL, []);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         Success = true;
+      }
+
+      void statementCall(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         string Identifier;
+         NameListObject FoundNameListObject;
+         NameListProcedure FoundProcedure, ScopeProcedure;
+         bool FoundLocal, Found, CalleeSuccess;
+
+         Success = false;
+
+         Identifier = CurrentToken.ContentString;
+
+         ParserObj.searchIdentifierGlobal(Identifier, FoundNameListObject, FoundLocal, Found, ScopeProcedure);
+
+         if( !Found )
+         {
+            ErrorMessage = "Procedurename was not defined!";
+            return;
+         }
+
+         if( FoundNameListObject.Type != NameListObject.EnumType.PROCEDURE )
+         {
+            ErrorMessage = "Identifier must be the name of a Procedure!";
+            return;
+         }
+
+         FoundProcedure = cast(NameListProcedure)FoundNameListObject;
+
+         // Generate code
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.CALL, [FoundProcedure.ProcedureIndex]);
 
          if( !CalleeSuccess )
          {
@@ -317,7 +420,7 @@ class Parser
 
          Success = false;
 
-         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.VZMINUS);
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.VZMINUS, []);
 
          if( !CalleeSuccess )
          {
@@ -334,7 +437,7 @@ class Parser
 
          Success = false;
 
-         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.OPADD);
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.OPADD, []);
 
          if( !CalleeSuccess )
          {
@@ -351,7 +454,7 @@ class Parser
 
          Success = false;
 
-         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.OPSUB);
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.OPSUB, []);
 
          if( !CalleeSuccess )
          {
@@ -372,7 +475,7 @@ class Parser
 
          Success = false;
 
-         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.OPMUL);
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.OPMUL, []);
 
          if( !CalleeSuccess )
          {
@@ -389,7 +492,7 @@ class Parser
 
          Success = false;
 
-         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.OPDIV);
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.OPDIV, []);
 
          if( !CalleeSuccess )
          {
@@ -434,7 +537,7 @@ class Parser
 
          // generate code
 
-         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHCONSTANT, IConst*4);
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHCONSTANT, [IConst*4]);
 
          if( !CalleeSuccess )
          {
@@ -448,8 +551,8 @@ class Parser
       void factorIdentifier(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
       {
          string Identifier;
-         NameListProcedure CurrentProcedure;
          NameListObject FoundNameListObject;
+         NameListProcedure ScopeProcedure;
          bool FoundLocal; // if this is true it means that the variable was found in the local scope
          bool Found;
 
@@ -458,26 +561,7 @@ class Parser
          Identifier = CurrentToken.ContentString;
          // search the identifier globaly
 
-         CurrentProcedure = ParserObj.CurrentProcedure;
-         Found = false;
-         FoundLocal = true;
-         
-         for(;;)
-         {
-            if( CurrentProcedure is null )
-            {
-               break;
-            }
-
-            Found |= CurrentProcedure.Entities.contains(Identifier, FoundNameListObject);
-            if( Found )
-            {
-               break;
-            }
-
-            FoundLocal = false;
-            CurrentProcedure = CurrentProcedure.Parent;
-         }
+         ParserObj.searchIdentifierGlobal(Identifier, FoundNameListObject, FoundLocal, Found, ScopeProcedure);
 
          if( !Found )
          {
@@ -498,7 +582,7 @@ class Parser
 
             if( FoundLocal )
             {
-               ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHVALVARLOCAL, FoundVariable.Displacement);
+               ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHVALVARLOCAL, [FoundVariable.Displacement]);
 
                if( !CalleeSuccess )
                {
@@ -508,7 +592,7 @@ class Parser
             }
             else
             {
-               ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHVALVARGLOBAL, FoundVariable.Displacement, CurrentProcedure.ProcedureIndex);
+               ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHVALVARGLOBAL, [FoundVariable.Displacement, ScopeProcedure.ProcedureIndex/*CurrentProcedure.ProcedureIndex*/]);
 
                if( !CalleeSuccess )
                {
@@ -528,7 +612,7 @@ class Parser
 
             // Generate the code
 
-            ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHCONSTANT, FoundConstant.Index);
+            ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHCONSTANT, [FoundConstant.Index]);
 
             if( !CalleeSuccess )
             {
@@ -546,6 +630,72 @@ class Parser
       }
 
       //////////
+      // Input
+      //////////
+
+      void inputCallback(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         string VariableName;
+         NameListObject FoundNameListObject;
+         NameListVariable FoundVariable;
+         bool Found, FoundLocal, CalleeSuccess;
+         NameListProcedure ScopeProcedure;
+
+         Success = false;
+
+         VariableName = CurrentToken.ContentString;
+
+         searchIdentifierGlobal(VariableName, FoundNameListObject, FoundLocal, Found, ScopeProcedure);
+
+         if( !Found )
+         {
+            ErrorMessage = "Variablename not found!";
+            return;
+         }
+
+         if( FoundNameListObject.Type != NameListObject.EnumType.VARIABLE )
+         {
+            ErrorMessage = "Identifier must be a Variablename!";
+            return;
+         }
+
+         FoundVariable = cast(NameListVariable)FoundNameListObject;
+
+         // Generate the code
+
+         if( FoundLocal )
+         {
+            ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHADDRVARLOCAL, [FoundVariable.Displacement]);
+
+            if( !CalleeSuccess )
+            {
+               ErrorMessage = "Internal Error";
+               return;
+            }
+         }
+         else
+         {
+            ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUSHADDRVARGLOBAL, [FoundVariable.Displacement, ScopeProcedure.ProcedureIndex/*CurrentProcedure.ProcedureIndex*/]);
+
+            if( !CalleeSuccess )
+            {
+               ErrorMessage = "Internal Error";
+               return;
+            }
+         }
+
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.GETVAL, []);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         Success = true;
+      }
+
+      //////////
       // Output
       //////////
 
@@ -555,7 +705,7 @@ class Parser
 
          Success = false;
 
-         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUTVAL);
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUTVAL, []);
 
          if( !CalleeSuccess )
          {
@@ -571,7 +721,7 @@ class Parser
 
       // programm
       /*   0 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      ,  2                                        , &nothing, new Nullable!uint(false,   1), NullUint                     );
-      /*   1 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.POINT       , &nothing, new Nullable!uint(false,  90), NullUint                     );
+      /*   1 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.POINT       , &programEnd, new Nullable!uint(false,  90), NullUint                     );
 
       // block
       /*   2 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.CONST         , &nothing, new Nullable!uint(false,   3), new Nullable!uint(false,   8));
@@ -590,11 +740,11 @@ class Parser
       /*  13 */this.Arcs ~= new Arc(Parser.Arc.EnumType.TOKEN    , cast(uint)Token.EnumType.IDENTIFIER       , &procedureName, new Nullable!uint(false,  14), NullUint                     );
       /*  14 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.SEMICOLON   , &nothing, new Nullable!uint(false,  15), NullUint                     );
       /*  15 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 2                                         , &nothing, new Nullable!uint(false,  16), new Nullable!uint(false,  19));
-      /*  16 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.SEMICOLON   , &procedureEnd, new Nullable!uint(false,  12), NullUint                     );
+      /*  16 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.SEMICOLON   , this.CallbackProcedureEnd, new Nullable!uint(false,  12), NullUint                     );
       /*  17 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 20 /* statement */                        , &nothing, new Nullable!uint(false,  18), NullUint                     );
       /*  18 */this.Arcs ~= new Arc(Parser.Arc.EnumType.END      , 0                                         , &nothing, NullUint                     , NullUint                     );
 
-      /*  19 */this.Arcs ~= new Arc(Parser.Arc.EnumType.NIL      , 0                                         , &nothing, new Nullable!uint(false,  17), NullUint                     );
+      /*  19 */this.Arcs ~= new Arc(Parser.Arc.EnumType.NIL      , 0                                         , &blockEntry, new Nullable!uint(false,  17), NullUint                     );
 
       // statement
       /*  20 */this.Arcs ~= new Arc(Parser.Arc.EnumType.TOKEN    , cast(uint)Token.EnumType.IDENTIFIER       , &statementAssignmentLeft, new Nullable!uint(false,  21), new Nullable!uint(false,  24));
@@ -614,9 +764,9 @@ class Parser
       /*  34 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.SEMICOLON   , &nothing, new Nullable!uint(false,  33), new Nullable!uint(false,  35));//NullUint                     );
       /*  35 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.END           , &nothing, new Nullable!uint(false,  23), NullUint                     );
       /*  36 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.CALL          , &nothing, new Nullable!uint(false,  37), new Nullable!uint(false,  38));
-      /*  37 */this.Arcs ~= new Arc(Parser.Arc.EnumType.TOKEN    , cast(uint)Token.EnumType.IDENTIFIER       , &nothing, new Nullable!uint(false,  23), NullUint                     );
+      /*  37 */this.Arcs ~= new Arc(Parser.Arc.EnumType.TOKEN    , cast(uint)Token.EnumType.IDENTIFIER       , &statementCall, new Nullable!uint(false,  23), NullUint                     );
       /*  38 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.INPUT       , &nothing, new Nullable!uint(false,  39), new Nullable!uint(false,  40));
-      /*  39 */this.Arcs ~= new Arc(Parser.Arc.EnumType.TOKEN    , cast(uint)Token.EnumType.IDENTIFIER       , &nothing, new Nullable!uint(false,  23), NullUint                     );
+      /*  39 */this.Arcs ~= new Arc(Parser.Arc.EnumType.TOKEN    , cast(uint)Token.EnumType.IDENTIFIER       , &inputCallback, new Nullable!uint(false,  23), NullUint                     );
       /*  40 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.OUTPUT      , &nothing, new Nullable!uint(false,  41), new Nullable!uint(false,  23));
       /*  41 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 50 /* expression */                       , &outputCallback, new Nullable!uint(false,  23), NullUint                     );
 
@@ -691,6 +841,39 @@ class Parser
       return true;
    }
 
+   // used by delegates while parsing/compiling
+   // searchs globaly for an Identifier
+   
+   // FoundLocal  is true of the Identifier was found in global space
+   // Found       was the Identifer found
+   // ScopeProcedure  is the procedure where it was Found
+   public void searchIdentifierGlobal(string Identifier, ref NameListObject FoundNameListObject, ref bool FoundLocal, ref bool Found, ref NameListProcedure ScopeProcedure)
+   {
+      NameListProcedure CurrentProcedure;
+      
+      CurrentProcedure = this.CurrentProcedure;
+      Found = false;
+      FoundLocal = true;
+      
+      for(;;)
+      {
+         if( CurrentProcedure is null )
+         {
+            break;
+         }
+
+         Found |= CurrentProcedure.Entities.contains(Identifier, FoundNameListObject);
+         if( Found )
+         {
+            ScopeProcedure = CurrentProcedure;
+            break;
+         }
+
+         FoundLocal = false;
+         CurrentProcedure = CurrentProcedure.Parent;
+      }
+   }
+
    public bool parse(ref string ErrorMessage)
    {
       struct StackClass
@@ -744,6 +927,7 @@ class Parser
          }
 
          // execute the callback
+         CallbackSuccess = false;
          StackContent.Callback(this, CurrentToken, CallbackSuccess, CallbackErrorMessage);
 
          if( !CallbackSuccess )
@@ -779,7 +963,8 @@ class Parser
                return false;
             }
 
-            // execute delegate
+            // execute callback
+            CallbackSuccess = false;
             CurrentArc.Callback(this, CurrentToken, CallbackSuccess, CallbackErrorMessage);
 
             if( !CallbackSuccess )
@@ -833,6 +1018,7 @@ class Parser
                // if so, we call the Callback
 
                // execute delegate
+               CallbackSuccess = false;
                CurrentArc.Callback(this, CurrentToken, CallbackSuccess, CallbackErrorMessage);
 
                if( !CallbackSuccess )
@@ -913,10 +1099,7 @@ class Parser
             if( CurrentToken.Type == CurrentArc.Info )
             {
                // if so, we call the Callback
-
-               writeln(CurrentIndex);
-
-               // execute delegate
+               CallbackSuccess = false;
                CurrentArc.Callback(this, CurrentToken, CallbackSuccess, CallbackErrorMessage);
 
                if( !CallbackSuccess )
@@ -1000,6 +1183,7 @@ class Parser
                // if so, we call the Callback
 
                // execute delegate
+               CallbackSuccess = false;
                CurrentArc.Callback(this, CurrentToken, CallbackSuccess, CallbackErrorMessage);
 
                if( !CallbackSuccess )
@@ -1327,4 +1511,6 @@ class Parser
    public string TempIdentifier;
 
    public int []ConstContent;
+
+   public void delegate(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage) CallbackProcedureEnd;
 }
