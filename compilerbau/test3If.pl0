@@ -1,0 +1,12 @@
+VAR a, b;
+ 
+PROCEDURE test;
+BEGIN
+   if a > b then
+      CALL test
+END;
+
+BEGIN
+	CALL test
+END
+.

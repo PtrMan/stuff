@@ -3,6 +3,8 @@ import std.file : write;
 // for debugging
 import std.stdio : writeln;
 
+import Stack : Stack;
+
 class CodeGenerator
 {
    private enum EnumOpCodes
@@ -79,6 +81,43 @@ class CodeGenerator
       this.OutputBytecode ~= 0;
       this.OutputBytecode ~= 0;
       this.OutputBytecode ~= 0;
+
+      this.LabelStack = new Stack!uint();
+   }
+
+   public void pushLabel()
+   {
+      this.LabelStack.push(this.Bytecode.length);
+   }
+
+   public void popLabel(ref uint Return, ref bool Success)
+   {
+      this.LabelStack.pop(Return, Success);
+   }
+
+   public uint getAddress()
+   {
+      return this.Bytecode.length;
+   }
+
+   public void overwrite2At(int Data, uint Address, ref bool Success)
+   {
+      Success = false;
+
+      if( this.Bytecode.length < 2 )
+      {
+         return;
+      }
+
+      if( Address > (this.Bytecode.length-2) )
+      {
+         return;
+      }
+
+      this.Bytecode[Address] = cast(ubyte)Data;
+      this.Bytecode[Address+1] = cast(ubyte)(Data >> 8);
+
+      Success = true;
    }
 
    public void writeOpCode(ref bool Success, EnumOpCodes OpCode, int Parameters[])
@@ -239,4 +278,6 @@ class CodeGenerator
    private ubyte Bytecode[];
 
    private ubyte OutputBytecode[];
+
+   private Stack!uint LabelStack;
 }

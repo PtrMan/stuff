@@ -410,6 +410,62 @@ class Parser
          Success = true;
       }
 
+      void statementIfCondition(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         bool CalleeSuccess;
+
+         Success = false;
+
+         ParserObj.CodeGen.pushLabel();
+
+         // Generate code
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.JNOT, [0]);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         Success = true;
+      }
+
+      void statementIfStatement(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         uint LabelAddress;
+         uint CurrentAddress;
+         uint AddressDifference;
+         bool CalleeSuccess;
+
+         Success = false;
+
+         ParserObj.CodeGen.popLabel(LabelAddress, CalleeSuccess);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         CurrentAddress = ParserObj.CodeGen.getAddress();
+
+         // calculate the difference
+
+         // assert((CurrentAddress - LabelAddress) >= 3)
+
+         AddressDifference = CurrentAddress - LabelAddress - 3;
+
+         ParserObj.CodeGen.overwrite2At(AddressDifference, LabelAddress+1, CalleeSuccess);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         Success = true;
+      }
+
       //////////
       // Expression
       //////////
@@ -716,6 +772,120 @@ class Parser
          Success = true;
       }
 
+      //////////
+      // Condition
+      //////////
+
+      void conditionOdd(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         bool CalleeSuccess;
+
+         Success = false;
+
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.ODD, []);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         Success = true;
+      }
+
+      void conditionEqual(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         Success = true;
+
+         ParserObj.ConditionType = EnumCondition.EQUAL;
+      }
+
+      void conditionUnequal(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         Success = true;
+
+         ParserObj.ConditionType = EnumCondition.NOTEQUAL;
+      }
+
+      void conditionLess(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         Success = true;
+
+         ParserObj.ConditionType = EnumCondition.LESS;
+      }
+
+      void conditionLessEqual(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         Success = true;
+
+         ParserObj.ConditionType = EnumCondition.LESSEQUAL;
+      }
+
+      void conditionGreater(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         Success = true;
+
+         ParserObj.ConditionType = EnumCondition.GREATER;
+      }
+
+      void conditionGreaterEqual(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         Success = true;
+
+         ParserObj.ConditionType = EnumCondition.GREATEREQUAL;
+      }
+
+      void conditionCodeGen(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         bool CalleeSuccess;
+         CodeGenerator.EnumOpCodes OpCode;
+
+         Success = false;
+
+         switch( ParserObj.ConditionType )
+         {
+            case EnumCondition.EQUAL:
+            OpCode = CodeGenerator.EnumOpCodes.CMPEQ;
+            break;
+
+            case EnumCondition.NOTEQUAL:
+            OpCode = CodeGenerator.EnumOpCodes.CMPNE;
+            break;
+
+            case EnumCondition.LESS:
+            OpCode = CodeGenerator.EnumOpCodes.CMPLT;
+            break;
+
+            case EnumCondition.LESSEQUAL:
+            OpCode = CodeGenerator.EnumOpCodes.CMPLE;
+            break;
+
+            case EnumCondition.GREATER:
+            OpCode = CodeGenerator.EnumOpCodes.CMPGT;
+            break;
+
+            case EnumCondition.GREATEREQUAL:
+            OpCode = CodeGenerator.EnumOpCodes.CMPGE;
+            break;
+
+            default:
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, OpCode, []);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         ParserObj.ConditionType = Parser.EnumCondition.INVALID;
+
+         Success = true;
+      }
+
 
       Nullable!uint NullUint = new Nullable!uint(true, 0);
 
@@ -752,9 +922,9 @@ class Parser
       /*  22 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 50 /* expression */                       , &statementAssignmentRight, new Nullable!uint(false,  23), NullUint                     );
       /*  23 */this.Arcs ~= new Arc(Parser.Arc.EnumType.END      , 0                                         , &nothing, NullUint                     , NullUint                     );
       /*  24 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.IF            , &nothing, new Nullable!uint(false,  25), new Nullable!uint(false,  28));
-      /*  25 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 80 /* condition */                        , &nothing, new Nullable!uint(false,  26), NullUint                     );
+      /*  25 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 80 /* condition */                        , &statementIfCondition, new Nullable!uint(false,  26), NullUint                     );
       /*  26 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.THEN          , &nothing, new Nullable!uint(false,  27), NullUint                     );
-      /*  27 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 20 /* statement */                        , &nothing, new Nullable!uint(false,  23), NullUint                     );
+      /*  27 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 20 /* statement */                        , &statementIfStatement, new Nullable!uint(false,  23), NullUint                     );
       /*  28 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.WHILE         , &nothing, new Nullable!uint(false,  29), new Nullable!uint(false,  32));
       /*  29 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 80 /* condition */                        , &nothing, new Nullable!uint(false,  30), NullUint                     );
       /*  30 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.DO            , &nothing, new Nullable!uint(false,  31), NullUint                     );
@@ -820,15 +990,15 @@ class Parser
       
       // condition
       /*  80 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.ODD           , &nothing, new Nullable!uint(false,  81), new Nullable!uint(false,  82));
-      /*  81 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 50 /* expression */                       , &nothing, new Nullable!uint(false,  90), NullUint                     );
+      /*  81 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 50 /* expression */                       , &conditionOdd, new Nullable!uint(false,  90), NullUint                     );
       /*  82 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 50 /* expression */                       , &nothing, new Nullable!uint(false,  83), NullUint                     );
-      /*  83 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.EQUAL       , &nothing, new Nullable!uint(false,  84), new Nullable!uint(false,  85));
-      /*  84 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 50 /* expression */                       , &nothing, new Nullable!uint(false,  90), NullUint                     );
-      /*  85 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.UNEQUAL     , &nothing, new Nullable!uint(false,  84), new Nullable!uint(false,  86));
-      /*  86 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.SMALLER     , &nothing, new Nullable!uint(false,  84), new Nullable!uint(false,  87));
-      /*  87 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.SMALLEREQUAL, &nothing, new Nullable!uint(false,  84), new Nullable!uint(false,  88));
-      /*  88 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.GREATER     , &nothing, new Nullable!uint(false,  84), new Nullable!uint(false,  89));
-      /*  89 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.GREATEREQUAL, &nothing, new Nullable!uint(false,  84), NullUint                     );
+      /*  83 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.EQUAL       , &conditionEqual, new Nullable!uint(false,  84), new Nullable!uint(false,  85));
+      /*  84 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 50 /* expression */                       , &conditionCodeGen, new Nullable!uint(false,  90), NullUint                     );
+      /*  85 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.UNEQUAL     , &conditionUnequal, new Nullable!uint(false,  84), new Nullable!uint(false,  86));
+      /*  86 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.SMALLER     , &conditionLess, new Nullable!uint(false,  84), new Nullable!uint(false,  87));
+      /*  87 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.SMALLEREQUAL, &conditionLessEqual, new Nullable!uint(false,  84), new Nullable!uint(false,  88));
+      /*  88 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.GREATER     , &conditionGreater, new Nullable!uint(false,  84), new Nullable!uint(false,  89));
+      /*  89 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.GREATEREQUAL, &conditionGreaterEqual, new Nullable!uint(false,  84), NullUint                     );
 
       // continue of programm
       /*  90 */this.Arcs ~= new Arc(Parser.Arc.EnumType.END      , 0                                         , &nothing, NullUint                     , NullUint                     );
@@ -1513,4 +1683,18 @@ class Parser
    public int []ConstContent;
 
    public void delegate(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage) CallbackProcedureEnd;
+
+   public enum EnumCondition
+   {
+      INVALID = 0, // should not appear
+
+      EQUAL,
+      NOTEQUAL,
+      GREATER,
+      GREATEREQUAL,
+      LESS,
+      LESSEQUAL
+   }
+
+   public EnumCondition ConditionType = EnumCondition.INVALID;
 }
