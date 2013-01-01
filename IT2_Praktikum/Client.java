@@ -82,17 +82,24 @@ public class Client
       
    }
 
-   public static void main(String argv[]) throws Exception
+   public static void main(String Arguments[]) throws Exception
    {
       InetAddress ServerIPAddr;
 
       // Create a Client object
       Client theClient = new Client();
-    
+
+      if( Arguments.length != 3 )
+      {
+         System.out.println("Invalid Arguments!");
+         System.out.println("Usage: java Client [Server hostname] [Server RTSP listening port] [Video file requested]");
+         return;
+      }
+
       // get server RTSP port and IP address from the command line
       //------------------
-      int RTSP_server_port = Integer.parseInt(argv[1]);
-      String ServerHost = argv[0];
+      int RTSP_server_port = Integer.parseInt(Arguments[1]);
+      String ServerHost = Arguments[0];
 
       try
       {
@@ -105,7 +112,7 @@ public class Client
       }
 
       // get video filename to request:
-      VideoFileName = argv[2];
+      VideoFileName = Arguments[2];
 
       // Establish a TCP connection with the server to exchange RTSP messages
       try

@@ -115,7 +115,7 @@ public class RTPpacket
 
       // FEC header
       Return[12] = (byte)((A.at(12) ^ B.at(12)) & 0x3f);
-      Return[13] = (byte)(A.at(13) B.at(13));
+      Return[13] = (byte)(A.at(13) ^ B.at(13));
 
       if( A.getsequencenumber() < B.getsequencenumber() )
       {
@@ -182,6 +182,8 @@ public class RTPpacket
             Return[26+i] = (byte)(Return[26+i] ^ A.at(HEADER_SIZE+i));
          }
       }
+
+      return Return;
    }
 
    public int getCc()
@@ -198,7 +200,7 @@ public class RTPpacket
       }
       else
       {
-         return this.header[Index];
+         return this.Header[Index];
       }
    }
 
