@@ -455,7 +455,85 @@ class Parser
 
          AddressDifference = CurrentAddress - LabelAddress - 3;
 
-         ParserObj.CodeGen.overwrite2At(AddressDifference, LabelAddress+1, CalleeSuccess);
+         ParserObj.CodeGen.overwrite2At(cast(short)AddressDifference, LabelAddress+1, CalleeSuccess);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         Success = true;
+      }
+
+      void statementWhileBegin(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         Success = true;
+
+         ParserObj.CodeGen.pushLabel();
+      }
+
+      void statementWhileAfterCondition(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         bool CalleeSuccess;
+
+         Success = false;
+
+         ParserObj.CodeGen.pushLabel();
+
+         // Generate code
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.JNOT, [0]);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         Success = true;
+      }
+
+      void statementWhileAfterStatement(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         uint JNotAddress; // points at the JNOT Operation
+         uint ConditionAddress; // points at the condition
+         uint BeforeJmpAddress;
+         uint AddressDifference;
+         bool CalleeSuccess;
+
+         Success = false;
+
+         ParserObj.CodeGen.popLabel(JNotAddress, CalleeSuccess);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error!";
+            return;
+         }
+
+         ParserObj.CodeGen.popLabel(ConditionAddress, CalleeSuccess);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error!";
+            return;
+         }
+
+         BeforeJmpAddress = ParserObj.CodeGen.getAddress();
+
+         // Generate JMP code
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.JMP, [- (BeforeJmpAddress - ConditionAddress + 3)]);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         // overwrite JNOT destination
+         AddressDifference = (BeforeJmpAddress + 3) - (JNotAddress + 3);
+
+         ParserObj.CodeGen.overwrite2At(cast(short)AddressDifference, JNotAddress+1, CalleeSuccess);
 
          if( !CalleeSuccess )
          {
@@ -925,10 +1003,10 @@ class Parser
       /*  25 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 80 /* condition */                        , &statementIfCondition, new Nullable!uint(false,  26), NullUint                     );
       /*  26 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.THEN          , &nothing, new Nullable!uint(false,  27), NullUint                     );
       /*  27 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 20 /* statement */                        , &statementIfStatement, new Nullable!uint(false,  23), NullUint                     );
-      /*  28 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.WHILE         , &nothing, new Nullable!uint(false,  29), new Nullable!uint(false,  32));
-      /*  29 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 80 /* condition */                        , &nothing, new Nullable!uint(false,  30), NullUint                     );
+      /*  28 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.WHILE         , &statementWhileBegin, new Nullable!uint(false,  29), new Nullable!uint(false,  32));
+      /*  29 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 80 /* condition */                        , &statementWhileAfterCondition, new Nullable!uint(false,  30), NullUint                     );
       /*  30 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.DO            , &nothing, new Nullable!uint(false,  31), NullUint                     );
-      /*  31 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 20 /* statement */                        , &nothing, new Nullable!uint(false,  23), NullUint                     );
+      /*  31 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 20 /* statement */                        , &statementWhileAfterStatement, new Nullable!uint(false,  23), NullUint                     );
       /*  32 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.BEGIN         , &nothing, new Nullable!uint(false,  33), new Nullable!uint(false,  36));
       /*  33 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 20 /* statement */                        , &nothing, new Nullable!uint(false,  34), NullUint                     ); //new Nullable!uint(false,  35));
       /*  34 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.SEMICOLON   , &nothing, new Nullable!uint(false,  33), new Nullable!uint(false,  35));//NullUint                     );

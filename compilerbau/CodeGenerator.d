@@ -100,9 +100,13 @@ class CodeGenerator
       return this.Bytecode.length;
    }
 
-   public void overwrite2At(int Data, uint Address, ref bool Success)
+   public void overwrite2At(short Data, uint Address, ref bool Success)
    {
+      short *DataPtr;
+
       Success = false;
+
+      DataPtr = &Data;
 
       if( this.Bytecode.length < 2 )
       {
@@ -114,8 +118,8 @@ class CodeGenerator
          return;
       }
 
-      this.Bytecode[Address] = cast(ubyte)Data;
-      this.Bytecode[Address+1] = cast(ubyte)(Data >> 8);
+      this.Bytecode[Address  ] = (cast(ubyte*)DataPtr)[0];
+      this.Bytecode[Address+1] = (cast(ubyte*)DataPtr)[1];
 
       Success = true;
    }
@@ -206,7 +210,7 @@ class CodeGenerator
 
       foreach( int Parameter; Parameters )
       {
-         this.write2(this.Bytecode, Parameter);
+         this.write2(this.Bytecode, cast(short)Parameter);
       }
 
       // just for debugging
@@ -219,10 +223,14 @@ class CodeGenerator
       }
    }
 
-   private void write2(ref ubyte Place[], int Data)
+   private void write2(ref ubyte Place[], short Data)
    {
-      Place ~= cast(ubyte)Data;
-      Place ~= cast(ubyte)(Data >> 8);
+      short *DataPtr;
+
+      DataPtr = &Data;
+
+      Place ~= (cast(ubyte*)DataPtr)[0];
+      Place ~= (cast(ubyte*)DataPtr)[1];
    }
 
    private void write1(ref ubyte Place[], int Data)
