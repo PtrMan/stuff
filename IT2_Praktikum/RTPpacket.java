@@ -7,7 +7,7 @@ public class RTPpacket
    static int HEADER_SIZE = 12;
 
 
-   static int TYPE_FEC = 127;
+   public static int TYPE_FEC = 127;
 
 
 
