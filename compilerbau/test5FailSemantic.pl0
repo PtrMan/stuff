@@ -1,0 +1,11 @@
+PROCEDURE test;
+VAR a, b, a;
+BEGIN
+   while a > b do
+      call test
+END;
+
+BEGIN
+	CALL test
+END
+.

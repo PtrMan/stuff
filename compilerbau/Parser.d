@@ -1180,8 +1180,10 @@ class Parser
 
          if( !CallbackSuccess )
          {
-            // TODO< build complete error message >
-            ErrorMessage = CallbackErrorMessage;
+            // build complete error message
+            this.buildErrorMessage(ErrorMessage, false);
+            ErrorMessage ~= CallbackErrorMessage;
+
             return false;
          }
 
@@ -1217,8 +1219,10 @@ class Parser
 
             if( !CallbackSuccess )
             {
-               // TODO< build complete error message >
-               ErrorMessage = CallbackErrorMessage;
+               // build complete error message
+               this.buildErrorMessage(ErrorMessage, false);
+               ErrorMessage ~= CallbackErrorMessage;
+            
                return false;
             }
 
@@ -1271,8 +1275,10 @@ class Parser
 
                if( !CallbackSuccess )
                {
-                  // TODO< build complete error message >
-                  ErrorMessage = CallbackErrorMessage;
+                  // build complete error message
+                  this.buildErrorMessage(ErrorMessage, false);
+                  ErrorMessage ~= CallbackErrorMessage;
+            
                   return false;
                }
 
@@ -1314,7 +1320,8 @@ class Parser
             if( CurrentArc.Alternative.isNull() )
             {
                // build the error Message
-               this.buildErrorMessage(ErrorMessage);
+               ErrorMessage = "";
+               this.buildErrorMessage(ErrorMessage, true);
 
                return false;
             }
@@ -1352,8 +1359,10 @@ class Parser
 
                if( !CallbackSuccess )
                {
-                  // TODO< build complete error message >
-                  ErrorMessage = CallbackErrorMessage;
+                  // build complete error message
+                  this.buildErrorMessage(ErrorMessage, false);
+                  ErrorMessage ~= CallbackErrorMessage;
+                  
                   return false;
                }
 
@@ -1395,7 +1404,8 @@ class Parser
             if( CurrentArc.Alternative.isNull() )
             {
                // build the error Message
-               this.buildErrorMessage(ErrorMessage);
+               ErrorMessage = "";
+               this.buildErrorMessage(ErrorMessage, true);
 
                return false;
             }
@@ -1436,8 +1446,10 @@ class Parser
 
                if( !CallbackSuccess )
                {
-                  // TODO< build complete error message >
-                  ErrorMessage = CallbackErrorMessage;
+                  // build complete error message
+                  this.buildErrorMessage(ErrorMessage, false);
+                  ErrorMessage ~= CallbackErrorMessage;
+                  
                   return false;
                }
 
@@ -1479,7 +1491,8 @@ class Parser
             if( CurrentArc.Alternative.isNull() )
             {
                // build the error Message
-               this.buildErrorMessage(ErrorMessage);
+               ErrorMessage = "";
+               this.buildErrorMessage(ErrorMessage, true);
 
                return false;
             }
@@ -1632,7 +1645,7 @@ class Parser
       return;
    }
 
-   private void buildErrorMessage(ref string ErrorMessage)
+   private void buildErrorMessage(ref string ErrorMessage, bool AddExpected)
    {
       string enumerateStrings(string []Strings)
       {
@@ -1670,49 +1683,52 @@ class Parser
          return;
       }
 
-      ErrorMessage  = this.buildTextWithMarker(CurrentTokenIndex);
-               
-      if( this.ExpectedKeyword.length == 1 )
+      ErrorMessage  ~= this.buildTextWithMarker(CurrentTokenIndex);
+      
+      if( AddExpected )
       {
-         ErrorMessage ~= "Keyword ";
-      }
-      else if( this.ExpectedKeyword.length > 1 )
-      {
-         ErrorMessage ~= "Keywords ";
-      }
+         if( this.ExpectedKeyword.length == 1 )
+         {
+            ErrorMessage ~= "Keyword ";
+         }
+         else if( this.ExpectedKeyword.length > 1 )
+         {
+            ErrorMessage ~= "Keywords ";
+         }
 
-      if( this.ExpectedKeyword.length > 0 )
-      {
-         ErrorMessage ~= enumerateStrings(this.ExpectedKeyword) ~ " expected!\n";
-      }
-
-
-      if( this.ExpectedOperations.length == 1 )
-      {
-         ErrorMessage ~= "Operation ";
-      }
-      else if( this.ExpectedOperations.length > 1 )
-      {
-         ErrorMessage ~= "Operations ";
-      }
-
-      if( this.ExpectedOperations.length > 0 )
-      {
-         ErrorMessage ~= enumerateStrings(this.ExpectedOperations) ~ " expected!\n";
-      }
+         if( this.ExpectedKeyword.length > 0 )
+         {
+            ErrorMessage ~= enumerateStrings(this.ExpectedKeyword) ~ " expected!\n";
+         }
 
 
-      if( this.ExpectedTokens.length == 1 )
-      {
-         ErrorMessage ~= "Token ";
-      }
-      else if( this.ExpectedTokens.length > 1 )
-      {
-         ErrorMessage ~= "Tokens ";
-      }
-      if( this.ExpectedTokens.length > 0 )
-      {
-         ErrorMessage ~= enumerateStrings(this.ExpectedTokens) ~ " expected!\n";
+         if( this.ExpectedOperations.length == 1 )
+         {
+            ErrorMessage ~= "Operation ";
+         }
+         else if( this.ExpectedOperations.length > 1 )
+         {
+            ErrorMessage ~= "Operations ";
+         }
+
+         if( this.ExpectedOperations.length > 0 )
+         {
+            ErrorMessage ~= enumerateStrings(this.ExpectedOperations) ~ " expected!\n";
+         }
+
+
+         if( this.ExpectedTokens.length == 1 )
+         {
+            ErrorMessage ~= "Token ";
+         }
+         else if( this.ExpectedTokens.length > 1 )
+         {
+            ErrorMessage ~= "Tokens ";
+         }
+         if( this.ExpectedTokens.length > 0 )
+         {
+            ErrorMessage ~= enumerateStrings(this.ExpectedTokens) ~ " expected!\n";
+         }
       }
    }
 
