@@ -84,15 +84,15 @@ public class FecPacket
       return ReturnPacket;
    }
 
-   static RTPpacket reconstruct(FecPacket Fec, RTPpacket Rrt)
+   static RTPpacket reconstruct(FecPacket Fec, RTPpacket Rtp)
    {
-      RTPpacket Return;
-      int Length;
+      RTPpacket Return = new RTPpacket();
+      int Length, i;
 
       // TODO< other fields? >
 
       Return.TimeStamp = Fec.TsRecovery ^ Rtp.TimeStamp;
-      Return.Cc = Fec.CCRecovery ^ Rtp.Cc;
+      Return.CC = Fec.CCRecovery ^ Rtp.CC;
       Length = Fec.LengthRecovery ^ Rtp.getpayload_length();
       Return.PayloadType = Fec.PTRecovery ^ Rtp.PayloadType;
 
@@ -102,7 +102,7 @@ public class FecPacket
       // xor payload
       for( i = 0; i < Length; i++ )
       {
-         Return.payload[i] = Fec.Payload[i] ^ Rtp.Payload[i];
+         Return.payload[i] = (byte)(Fec.Payload[i] ^ Rtp.payload[i]);
       }
 
       return Return;

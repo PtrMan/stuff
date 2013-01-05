@@ -1,0 +1,845 @@
+Test
+getNextPacket()
+  called first time
+  found normal Packet
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 7 CurrentPacket.SequenceNumber 8
+  [ok  ] usual next packet
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 8 CurrentPacket.SequenceNumber 11
+  [info] length of waitqueue 15
+  [ok  ] Accepted because frame distance was in range
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 11 CurrentPacket.SequenceNumber 16
+  [info] length of waitqueue 14
+  [ok  ] Accepted because frame distance was in range
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 16 CurrentPacket.SequenceNumber 18
+  [info] length of waitqueue 13
+  [ok  ] Accepted because frame distance was in range
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 18 CurrentPacket.SequenceNumber 21
+  [info] length of waitqueue 13
+  [ok  ] Accepted because frame distance was in range
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 21 CurrentPacket.SequenceNumber 22
+  [ok  ] usual next packet
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 22 CurrentPacket.SequenceNumber 25
+  [info] length of waitqueue 13
+  [ok  ] Accepted because frame distance was in range
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
+getNextPacket()
+  normal
+  [info] CurrentPlaySequenceNumber 25 CurrentPacket.SequenceNumber 35
+  [fail] need to correct, but cant
