@@ -89,13 +89,11 @@ public class Client
    int ReceivedPackets = 0; // Count of Received packets
    //int MaxSequenceNumber = 0; // highes packet number / sequence number
    int Datarate = 0;
+   int FecCorrectedPackets = 0; // count for the packets which were corrected with FEC
 
    int TimerMiliseconds = 0;
 
    Logger LoggerObj;
-
-   // for testing
-   boolean WasCorrected = false;
 
    public Client()
    {
@@ -241,7 +239,10 @@ public class Client
 
             //init RTSP sequence number
             RTSPSeqNb = 1;
-           
+            
+            // check the options functionality
+            send_RTSP_request("OPTIONS");
+
             //Send SETUP message to the server
             send_RTSP_request("SETUP");
             //Wait for the response 
@@ -550,6 +551,7 @@ public class Client
          System.out.println("Transmitted packets: " + this.ReceivedPackets);
          System.out.println("Lost packets       : " + (MaxSequenceNumber-this.ReceivedPackets));
          System.out.println("Packetlost-ratio   : " + PacketLostRatio + "%");
+         System.out.println("FEC corrected      : " + FecCorrectedPackets);
          System.out.println("Datarate           : " + this.Datarate);
 
          this.Datarate = 0;
@@ -563,8 +565,6 @@ public class Client
    RTPpacket getNextPacket()
    {
       int i;
-
-      this.WasCorrected = false;
 
       this.LoggerObj.writeString("getNextPacket()");
 
@@ -617,6 +617,7 @@ public class Client
 
          this.LoggerObj.writeString("  found normal Packet");
 
+         this.ReceivedPackets++;
 
          // remove corresponding FEC packet
 
@@ -672,6 +673,9 @@ public class Client
 
                   this.FecPacketList.remove(0);
 
+                  this.FecCorrectedPackets++;
+                  this.ReceivedPackets++;
+
                   return this.LastPacket;
                }
                else
@@ -708,6 +712,7 @@ public class Client
 
                this.LoggerObj.writeString("  [ok  ] usual next packet");
 
+               this.ReceivedPackets++;
 
                return this.LastPacket;
             }
@@ -746,6 +751,8 @@ public class Client
 
                   this.LoggerObj.writeString("  [ok  ] Accepted because frame distance was in range (1)");
 
+                  this.ReceivedPackets++;
+
                   return this.LastPacket;
                }
 
@@ -778,7 +785,8 @@ public class Client
 
                this.LoggerObj.writeString("  [ok  ] reconstructed from FEC and next next Packet");
 
-               this.WasCorrected = true;
+               this.ReceivedPackets++;
+               this.FecCorrectedPackets++;
 
                return this.LastPacket;
             }
@@ -794,6 +802,8 @@ public class Client
                this.PacketList.remove(0);
 
                this.LoggerObj.writeString("  [ok  ] Accepted because frame distance was in range (2)");
+
+               this.ReceivedPackets++;
 
                return this.LastPacket;
             }
@@ -858,8 +868,19 @@ public class Client
 
                //if state == INIT gets the Session Id from the SessionLine
                tokens = new StringTokenizer(SessionLine);
-               tokens.nextToken(); //skip over the Session:
-               RTSPid = Integer.parseInt(tokens.nextToken());
+
+               String ResponseType = tokens.nextToken();
+
+               System.out.println(ResponseType);
+
+               if( ResponseType.compareTo( "Public:") == 0 )
+               {
+                  System.out.println("Got OPTIONS answer");
+               }
+               else
+               {
+                  RTSPid = Integer.parseInt(tokens.nextToken());
+               }
             }
 
             break;
@@ -868,11 +889,17 @@ public class Client
          {
             // ignore
          }
-         catch(Exception ex)
+         catch( IOException e )
+         {
+            System.out.println("Exception caught 3: "+e);
+            System.exit(0);
+         }
+        
+         /*catch(Exception ex)
          {
             System.out.println("Exception caught 3: "+ex);
             System.exit(0);
-         }
+         }*/
       }
       
       return reply_code;
