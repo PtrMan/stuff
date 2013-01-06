@@ -122,6 +122,8 @@ public class RTPpacket
       int ProtectionLength;
       int Mask;
 
+      System.out.println("BuildFecPacket");
+
       if( A.getpayload_length() > B.getpayload_length() )
       {
          ProtectionLength = A.getpayload_length();
@@ -137,7 +139,7 @@ public class RTPpacket
       Return[0] = (byte)((A.getCc() & 0xf) | 0x80);
       Return[1] = (byte)(TYPE_FEC & 0x7f); // it is a FEC-packet
       Return[2] = (byte)(SequenceNumber / 0xff);
-      Return[3] = (byte)(SequenceNumber % 0xff);
+      Return[3] = (byte)(SequenceNumber & 0xff);
       Return[4] = (byte)((TimeStamp >> 24) & 0xFF);
       Return[5] = (byte)((TimeStamp >> 16) & 0xFF);
       Return[6] = (byte)((TimeStamp >> 8) & 0xFF);
@@ -151,6 +153,11 @@ public class RTPpacket
       Return[12] = (byte)((A.at(12) ^ B.at(12)) & 0x3f);
       Return[13] = (byte)(A.at(13) ^ B.at(13));
 
+      System.out.print("  SequenceNumber A ");
+      System.out.println(A.getsequencenumber());
+      System.out.print("  SequenceNumber B ");
+      System.out.println(B.getsequencenumber());
+
       if( A.getsequencenumber() < B.getsequencenumber() )
       {
          LowestSequenceNumber = A.getsequencenumber();
@@ -160,8 +167,8 @@ public class RTPpacket
          LowestSequenceNumber = B.getsequencenumber();
       }
       
-      Return[14] = (byte)(LowestSequenceNumber / 0xff);
-      Return[15] = (byte)(LowestSequenceNumber % 0xff);
+      Return[14] = (byte)(LowestSequenceNumber >> 8);
+      Return[15] = (byte)(LowestSequenceNumber & 0xff);
 
       TimeStampRecovery = A.gettimestamp() ^ B.gettimestamp();
 
@@ -174,11 +181,26 @@ public class RTPpacket
       LengthA = A.getpayload_length();
       LengthB = B.getpayload_length();
 
+      
+      System.out.print("  LengthA ");
+      System.out.println(LengthA);
+      System.out.print("  LengthB ");
+      System.out.println(LengthB);
+
       XorLength = LengthA ^ LengthB;
+
+      System.out.print("  XorLength ");
+      System.out.println(XorLength);
 
       // length recovery
       Return[20] = (byte)((XorLength >> 8) & 0xff);
       Return[21] = (byte)(XorLength & 0xff);
+
+      System.out.print("  Return[20]");
+      System.out.println(Return[20]);
+
+      System.out.print("  Return[21]");
+      System.out.println(Return[21]);
 
       // FEC level 0 header
 

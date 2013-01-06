@@ -43,9 +43,7 @@ public class FecTester
       {
          //update current imagenb
          imagenb++;
-         
-         try
-         {
+
             //get next frame to send from the video, as well as its size
             int image_length = video.getnextframe(buf);
 
@@ -87,9 +85,10 @@ public class FecTester
                {
                   if( OrginalRtpBytes[i] != ReconstructedRtpBytes[i] )
                   {
-                     System.out.println(i);
 
-                     System.out.println("mismatch!");
+                     System.out.print("mismatch at ");
+                     System.out.print(i);
+                     System.out.println(" !");
 
                      this.debugArray(OrginalRtpBytes);
                      System.out.println("---");
@@ -141,15 +140,12 @@ public class FecTester
                   }
                }
                System.out.print("all ok\n");
-            }
+            
 
+            
+            }
+            
             this.LastRtpPacket = rtp_packet;
-         }
-         catch(Exception ex)
-         {
-            System.out.println("Exception caught: "+ex);
-            System.exit(0);
-         }
       }
       else
       {

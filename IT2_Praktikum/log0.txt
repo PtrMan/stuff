@@ -1,1 +1,450 @@
 Test
+getNextPacket()
+  [info] length of FEC queue 17
+    SnBase 1
+    SnBase 2
+    SnBase 3
+    SnBase 4
+    SnBase 5
+    SnBase 6
+    SnBase 7
+    SnBase 8
+    SnBase 9
+    SnBase 10
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+  called first time
+  found normal Packet
+  remove coresponding FEC packet
+getNextPacket()
+  [info] length of FEC queue 17
+    SnBase 2
+    SnBase 3
+    SnBase 4
+    SnBase 5
+    SnBase 6
+    SnBase 7
+    SnBase 8
+    SnBase 9
+    SnBase 10
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+  normal
+  [info] CurrentPlaySequenceNumber 1 CurrentPacket.SequenceNumber 2
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 18
+    SnBase 2
+    SnBase 3
+    SnBase 4
+    SnBase 5
+    SnBase 6
+    SnBase 7
+    SnBase 8
+    SnBase 9
+    SnBase 10
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+  normal
+  [info] CurrentPlaySequenceNumber 2 CurrentPacket.SequenceNumber 3
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 18
+    SnBase 3
+    SnBase 4
+    SnBase 5
+    SnBase 6
+    SnBase 7
+    SnBase 8
+    SnBase 9
+    SnBase 10
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+  normal
+  [info] CurrentPlaySequenceNumber 3 CurrentPacket.SequenceNumber 4
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 18
+    SnBase 4
+    SnBase 5
+    SnBase 6
+    SnBase 7
+    SnBase 8
+    SnBase 9
+    SnBase 10
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+  normal
+  [info] CurrentPlaySequenceNumber 4 CurrentPacket.SequenceNumber 5
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 18
+    SnBase 5
+    SnBase 6
+    SnBase 7
+    SnBase 8
+    SnBase 9
+    SnBase 10
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+  normal
+  [info] CurrentPlaySequenceNumber 5 CurrentPacket.SequenceNumber 7
+  [info] FEC SnBase 5 this.CurrentPlaySequenceNumber 5 CurrentPacket.SequenceNumber 7
+6
+  [ok  ] reconstructed from FEC and next next Packet
+getNextPacket()
+  [info] length of FEC queue 19
+    SnBase 5
+    SnBase 6
+    SnBase 7
+    SnBase 8
+    SnBase 9
+    SnBase 10
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+  normal
+  [info] CurrentPlaySequenceNumber 6 CurrentPacket.SequenceNumber 7
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 18
+    SnBase 7
+    SnBase 8
+    SnBase 9
+    SnBase 10
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+  normal
+  [info] CurrentPlaySequenceNumber 7 CurrentPacket.SequenceNumber 8
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 18
+    SnBase 8
+    SnBase 9
+    SnBase 10
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+    SnBase 25
+  normal
+  [info] CurrentPlaySequenceNumber 8 CurrentPacket.SequenceNumber 10
+  [info] FEC SnBase 8 this.CurrentPlaySequenceNumber 8 CurrentPacket.SequenceNumber 10
+9
+  [ok  ] reconstructed from FEC and next next Packet
+getNextPacket()
+  [info] length of FEC queue 19
+    SnBase 8
+    SnBase 9
+    SnBase 10
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+    SnBase 25
+    SnBase 26
+  normal
+  [info] CurrentPlaySequenceNumber 9 CurrentPacket.SequenceNumber 10
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 18
+    SnBase 10
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+    SnBase 25
+    SnBase 26
+    SnBase 27
+  normal
+  [info] CurrentPlaySequenceNumber 10 CurrentPacket.SequenceNumber 11
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 19
+    SnBase 11
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+    SnBase 25
+    SnBase 26
+    SnBase 27
+    SnBase 28
+    SnBase 29
+  normal
+  [info] CurrentPlaySequenceNumber 11 CurrentPacket.SequenceNumber 12
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 19
+    SnBase 12
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+    SnBase 25
+    SnBase 26
+    SnBase 27
+    SnBase 28
+    SnBase 29
+    SnBase 30
+  normal
+  [info] CurrentPlaySequenceNumber 12 CurrentPacket.SequenceNumber 13
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 19
+    SnBase 13
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+    SnBase 25
+    SnBase 26
+    SnBase 27
+    SnBase 28
+    SnBase 29
+    SnBase 30
+    SnBase 31
+  normal
+  [info] CurrentPlaySequenceNumber 13 CurrentPacket.SequenceNumber 14
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 19
+    SnBase 14
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+    SnBase 25
+    SnBase 26
+    SnBase 27
+    SnBase 28
+    SnBase 29
+    SnBase 30
+    SnBase 31
+    SnBase 32
+  normal
+  [info] CurrentPlaySequenceNumber 14 CurrentPacket.SequenceNumber 15
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 19
+    SnBase 15
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+    SnBase 25
+    SnBase 26
+    SnBase 27
+    SnBase 28
+    SnBase 29
+    SnBase 30
+    SnBase 31
+    SnBase 32
+    SnBase 33
+  normal
+  [info] CurrentPlaySequenceNumber 15 CurrentPacket.SequenceNumber 16
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 19
+    SnBase 16
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+    SnBase 25
+    SnBase 26
+    SnBase 27
+    SnBase 28
+    SnBase 29
+    SnBase 30
+    SnBase 31
+    SnBase 32
+    SnBase 33
+    SnBase 34
+  normal
+  [info] CurrentPlaySequenceNumber 16 CurrentPacket.SequenceNumber 17
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 19
+    SnBase 17
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+    SnBase 25
+    SnBase 26
+    SnBase 27
+    SnBase 28
+    SnBase 29
+    SnBase 30
+    SnBase 31
+    SnBase 32
+    SnBase 33
+    SnBase 34
+    SnBase 35
+  normal
+  [info] CurrentPlaySequenceNumber 17 CurrentPacket.SequenceNumber 18
+  [ok  ] usual next packet
+getNextPacket()
+  [info] length of FEC queue 19
+    SnBase 18
+    SnBase 19
+    SnBase 20
+    SnBase 21
+    SnBase 22
+    SnBase 23
+    SnBase 24
+    SnBase 25
+    SnBase 26
+    SnBase 27
+    SnBase 28
+    SnBase 29
+    SnBase 30
+    SnBase 31
+    SnBase 32
+    SnBase 33
+    SnBase 34
+    SnBase 35
+    SnBase 36
+  normal
+  [info] CurrentPlaySequenceNumber 18 CurrentPacket.SequenceNumber 25
+  [info] FEC SnBase 18 this.CurrentPlaySequenceNumber 18 CurrentPacket.SequenceNumber 25
