@@ -30,13 +30,38 @@ public class RTPpacket
    // Bitstream of the RTP payload
    public byte[] payload;
 
+   // gets the complete data of the RTPpacket
+   // NOTE< very hackinsh and unperformant >
+   public byte[] getComplete()
+   {
+      byte[] Return;
+      int i;
+
+      this.rebuildHeader(this.PayloadType, this.SequenceNumber, this.TimeStamp);
+
+      Return = new byte[this.Header.length + this.payload.length];
+
+      i = 0;
+
+      for( i = 0; i < this.Header.length; i++ )
+      {
+         Return[i] = this.Header[i];
+      }
+
+      for( i = 0; i < this.payload.length; i++ )
+      {
+         Return[i+this.Header.length] = this.payload[i];
+      }
+
+      return Return;
+   }
+
    // constructor which is not initialisazing anything
    public RTPpacket()
    {
    }
 
-   // Constructor of an RTPpacket object from header fields and payload bitstream
-   public RTPpacket(int PType, int Framenb, int Time, byte[] data, int data_length)
+   public void rebuildHeader(int PType, int SequenceNumber, int Time)
    {
       // fill by default header fields
       Version = 2;
@@ -45,9 +70,9 @@ public class RTPpacket
       CC = 0;
       Marker = 0;
       Ssrc = 0;
-      
+
       // fill changing header fields
-      SequenceNumber = Framenb;
+      this.SequenceNumber = SequenceNumber;
       TimeStamp = Time;
       PayloadType = PType;
     
@@ -67,6 +92,12 @@ public class RTPpacket
       Header[9] = (byte)0;
       Header[10] = (byte)0;
       Header[11] = (byte)0;
+   }
+
+   // Constructor of an RTPpacket object from header fields and payload bitstream
+   public RTPpacket(int PType, int SequenceNumber, int Time, byte[] data, int data_length)
+   {
+      this.rebuildHeader(PType, SequenceNumber, Time);
 
       // fill the payload bitstream
       this.payload_size = data_length;
@@ -77,13 +108,11 @@ public class RTPpacket
       {
          payload[i] = data[i];
       }
-
-      // ! Do not forget to uncomment method printheader() below !
    }
 
    // SequenceNumber : the Sequence number of the FEC Packet (see RFC)
    //                  ... The sequence number has the standard definition ...
-   byte[] buildFecPacket(RTPpacket A, RTPpacket B, int SequenceNumber, int TimeStamp)
+   static byte[] buildFecPacket(RTPpacket A, RTPpacket B, int SequenceNumber, int TimeStamp)
    {
       byte[] Return;
       int LowestSequenceNumber;

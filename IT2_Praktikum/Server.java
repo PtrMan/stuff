@@ -70,6 +70,10 @@ public class Server extends JFrame implements ActionListener
    private float LostRate;
    private Random Rand = new Random();
 
+   RTPpacket LastRtpPacket = null;
+
+   boolean FirstRtpPacket = true;
+
    //--------------------------------
    //Constructor
    //--------------------------------
@@ -158,6 +162,8 @@ public class Server extends JFrame implements ActionListener
    
             // Send response
             theServer.send_RTSP_response();
+
+            System.out.println("VideoFileName " + VideoFileName);
    
             // init the VideoStream object:
             theServer.video = new VideoStream(VideoFileName);
@@ -243,21 +249,86 @@ public class Server extends JFrame implements ActionListener
 
             //Builds an RTPpacket object containing the frame
             RTPpacket rtp_packet = new RTPpacket(MJPEG_TYPE, imagenb, imagenb*FRAME_PERIOD, buf, image_length);
+
+            if( this.FirstRtpPacket )
+            {
+               this.FirstRtpPacket = false;
+            }
+            else
+            {
+               // calculate and send FecPacket
+
+               byte[] FecPacketContent = RTPpacket.buildFecPacket(this.LastRtpPacket, rtp_packet, 0 /* TODO */, rtp_packet.TimeStamp);
+
+               // selftest
+               /*
+               FecPacket TestFecPacket = FecPacket.deSerilize(FecPacketContent, FecPacketContent.length);
+
+               RTPpacket ReconstructedRtp = FecPacket.reconstruct(TestFecPacket, rtp_packet);
+               byte[] ReconstructedRtpBytes = ReconstructedRtp.getComplete();
+
+               for( int i = 0; i < ReconstructedRtpBytes.length; i++ )
+               {
+               }
+               System.out.print("\n");
+
+               byte[] OrginalRtpBytes = this.LastRtpPacket.getComplete();
+               
+               if( ReconstructedRtpBytes.length != OrginalRtpBytes.length )
+               {
+                  System.out.println("unequal size!");
+                  System.exit(0);
+               }
+
+               for( int i = 0; i < OrginalRtpBytes.length; i++ )
+               {
+                  System.out.print(ReconstructedRtpBytes[i]);
+                  System.out.print(" ");
+                  System.out.print(OrginalRtpBytes[i]);
+                  System.out.print("\n");
+
+                  if( OrginalRtpBytes[i] != ReconstructedRtpBytes[i] )
+                  {
+                     System.out.println(i);
+
+                     System.out.println("mismatch!");
+                     System.exit(0);
+                  }
+               }
+               System.out.print("all ok\n");
+
+               System.exit(0);
+               */
+
+               // send the packet as a DatagramPacket over the UDP socket 
+               // senddp = new DatagramPacket(packet_bits, packet_length, ClientIPAddr, RTP_dest_port);
+               senddp = new DatagramPacket(FecPacketContent, FecPacketContent.length, ClientIPAddr, RTP_dest_port);
+
+               RTPsocket.send(senddp);
+
+
+            }
+
+            this.LastRtpPacket = rtp_packet;
 	  
-            //get to total length of the full rtp packet to send
-            int packet_length = rtp_packet.getlength();
 
-            //retrieve the packet bitstream and store it in an array of bytes
-            //byte[] packet_bits = new byte[packet_length];
-            //rtp_packet.getpacket(packet_bits);
-            rtp_packet.getpacket(buf);
-
-            //send the packet as a DatagramPacket over the UDP socket 
-            //senddp = new DatagramPacket(packet_bits, packet_length, ClientIPAddr, RTP_dest_port);
-            senddp = new DatagramPacket(buf, packet_length, ClientIPAddr, RTP_dest_port);
-            
             if( this.Rand.nextInt(100) > (int)(this.LostRate*100.0f) )
             {
+               // get to total length of the full rtp packet to send
+               int packet_length = rtp_packet.getlength();
+
+               // retrieve the packet bitstream and store it in an array of bytes
+               // byte[] packet_bits = new byte[packet_length];
+               // rtp_packet.getpacket(packet_bits);
+               rtp_packet.getpacket(buf);
+
+               
+               
+               // send the packet as a DatagramPacket over the UDP socket 
+               // senddp = new DatagramPacket(packet_bits, packet_length, ClientIPAddr, RTP_dest_port);
+               senddp = new DatagramPacket(buf, packet_length, ClientIPAddr, RTP_dest_port);
+            
+
                RTPsocket.send(senddp);
 
                //System.out.println("Send frame #"+imagenb);

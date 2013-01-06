@@ -402,6 +402,8 @@ public class Client
 
          if( IsFecPacket )
          {
+            System.out.println("deserilize");
+
             FecPacketObj = FecPacket.deSerilize(rcvdp.getData(), rcvdp.getLength());
          }
 
@@ -557,7 +559,31 @@ public class Client
    // (because each Frame is saved in one RTP-packet)
    RTPpacket getNextPacket()
    {
+      int i;
+
       this.LoggerObj.writeString("getNextPacket()");
+
+      this.LoggerObj.writeString("  [info] length of FEC queue " + Integer.toString(this.FecPacketList.size()) );
+
+      for( i = 0; i < this.FecPacketList.size(); i++)
+      {
+         FecPacket CurrentPacket;
+         CurrentPacket = (FecPacket)(this.FecPacketList.get(i));
+
+         this.LoggerObj.writeString("    SnBase " + Integer.toString(CurrentPacket.SnBase));
+      }
+
+      // delete unneeded FEC packets
+      for(;;)
+      {
+         if( (this.FecPacketList.size() > 0) && ( ((FecPacket)(this.FecPacketList.get(0))).SnBase < this.CurrentPlaySequenceNumber ) )
+         {
+            this.FecPacketList.remove(0);
+            continue;
+         }
+
+         break;
+      }
 
       // check if the function is called the first time
       if( this.FirstPacket )
@@ -664,6 +690,7 @@ public class Client
             if( this.CurrentPlaySequenceNumber + 1 == CurrentPacket.SequenceNumber )
             {
                // check if we do have a FEC packet for this Packet and delete it
+               // NEEDED?
                if( (this.FecPacketList.size() > 0) && ( ((FecPacket)(this.FecPacketList.get(0))).SnBase == this.CurrentPlaySequenceNumber ) )
                {
                   this.FecPacketList.remove(0);
@@ -682,25 +709,27 @@ public class Client
 
             // else
 
+            int FrameDistance = CurrentPacket.SequenceNumber - this.CurrentPlaySequenceNumber;
+
+            // assert(FrameDistance >= 0)
+
+            if( FrameDistance < 0 )
+            {
+               // very strange error
+
+               this.LoggerObj.writeString("  [info] strange: frame distance is less than 0");
+
+               return this.LastPacket;
+            }
+
             // we need to try to correct that missing packet
+            // or we just drop the missing frames
 
             if( (this.FecPacketList.size() == 0) )
             {
                // we check if the distance is <= 5, so it is acceptable to drop some packets
                // TODO< check for full enougth buffer ? >
 
-               int FrameDistance = CurrentPacket.SequenceNumber - this.CurrentPlaySequenceNumber;
-
-               // assert(FrameDistance >= 0)
-
-               if( FrameDistance < 0 )
-               {
-                  // very strange error
-
-                  this.LoggerObj.writeString("  [info] strange: frame distance is less than 0");
-
-                  return this.LastPacket;
-               }
                if( FrameDistance <= 5+1 )
                {
                   this.LoggerObj.writeString("  [info] length of waitqueue " + Integer.toString(this.PacketList.size()));
@@ -710,7 +739,7 @@ public class Client
 
                   this.PacketList.remove(0);
 
-                  this.LoggerObj.writeString("  [ok  ] Accepted because frame distance was in range");
+                  this.LoggerObj.writeString("  [ok  ] Accepted because frame distance was in range (1)");
 
                   return this.LastPacket;
                }
@@ -721,21 +750,43 @@ public class Client
                return this.LastPacket;
             }
 
-            if( ( ((FecPacket)(this.FecPacketList.get(0))).SnBase == this.CurrentPlaySequenceNumber+1 ) && (CurrentPacket.SequenceNumber == CurrentPlaySequenceNumber+2) )
+            this.LoggerObj.writeString(
+               "  [info] FEC SnBase " + Integer.toString(((FecPacket)(this.FecPacketList.get(0))).SnBase) +
+               " this.CurrentPlaySequenceNumber " + Integer.toString(this.CurrentPlaySequenceNumber) +
+               " CurrentPacket.SequenceNumber " + Integer.toString(CurrentPacket.SequenceNumber)
+            );
+
+            if( ( ((FecPacket)(this.FecPacketList.get(0))).SnBase == this.CurrentPlaySequenceNumber ) )
             {
                this.LastPacket = FecPacket.reconstruct( (FecPacket)(this.FecPacketList.get(0)), CurrentPacket );
                this.CurrentPlaySequenceNumber = this.LastPacket.SequenceNumber;
+
+               this.LoggerObj.writeString(Integer.toString(this.LastPacket.SequenceNumber));
 
                this.LoggerObj.writeString("  [ok  ] reconstructed from FEC and next next Packet");
 
                return this.LastPacket;
             }
-            else
+
+            // else
+            if( FrameDistance <= 5+1 )
             {
-               this.LoggerObj.writeString("  [fail] failed to reconstruct, return Last Packet");
+               this.LoggerObj.writeString("  [info] length of waitqueue " + Integer.toString(this.PacketList.size()));
+
+               this.LastPacket = CurrentPacket;
+               this.CurrentPlaySequenceNumber = this.LastPacket.SequenceNumber;
+
+               this.PacketList.remove(0);
+
+               this.LoggerObj.writeString("  [ok  ] Accepted because frame distance was in range (2)");
 
                return this.LastPacket;
             }
+
+            // else
+            this.LoggerObj.writeString("  [fail] failed to reconstruct, return Last Packet");
+
+            return this.LastPacket;
          }
 
          // assert(false, "Never reached!");

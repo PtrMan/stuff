@@ -29,7 +29,7 @@ public class FecPacket
 
       HeaderLength = 12 + 10;
 
-      if( RtpPacketLength + 10 < Length )
+      if( RtpPacketLength + 10 >= Length )
       {
          // wrong length
          return null;
@@ -52,7 +52,7 @@ public class FecPacket
 
       if( Length < HeaderLength )
       {
-         // rong length
+         // wrong length
          return null;
       }
 
@@ -87,23 +87,78 @@ public class FecPacket
    static RTPpacket reconstruct(FecPacket Fec, RTPpacket Rtp)
    {
       RTPpacket Return = new RTPpacket();
-      int Length, i;
+      int RecoveredLength, i, MinLength;
 
       // TODO< other fields? >
 
       Return.TimeStamp = Fec.TsRecovery ^ Rtp.TimeStamp;
       Return.CC = Fec.CCRecovery ^ Rtp.CC;
-      Length = Fec.LengthRecovery ^ Rtp.getpayload_length();
+      RecoveredLength = Fec.LengthRecovery ^ Rtp.getpayload_length();
       Return.PayloadType = Fec.PTRecovery ^ Rtp.PayloadType;
 
-      // allocate payload length
-      Return.payload = new byte[Length];
+      // note< sequence number recovery works only for 2 packet FEC >
+      if( Fec.SnBase == Rtp.SequenceNumber )
+      {
+         Return.SequenceNumber = Rtp.SequenceNumber+1;
+      }
+      else
+      {
+         Return.SequenceNumber = Rtp.SequenceNumber-1;
+      }
+      
+      System.out.print("reconstruct length ");
+      System.out.println(RecoveredLength);
 
+      
+      MinLength = Fec.Payload.length;
+
+      if( Rtp.payload.length < MinLength )
+      {
+         MinLength = Rtp.payload.length;
+      }
+
+      System.out.println(Fec.Payload.length);
+      System.out.println(Rtp.payload.length);
+      System.out.println(RecoveredLength);
+
+
+
+      // allocate payload length
+      Return.payload = new byte[RecoveredLength];
+
+
+      if( Rtp.payload.length > RecoveredLength )
+      {
+         for( i = 0; i < RecoveredLength; i++ )
+         {
+            Return.payload[i] = Fec.Payload[i];
+         }
+
+         for( i = 0; i < RecoveredLength; i++ )
+         {
+            Return.payload[i] ^= Rtp.payload[i];
+         }
+      }
+      else
+      {
+         for( i = 0; i < RecoveredLength; i++ )
+         {
+            Return.payload[i] = Rtp.payload[i];
+         }
+
+         for( i = 0; i < RecoveredLength; i++ )
+         {
+            Return.payload[i] ^= Fec.Payload[i];
+         }
+      }
+
+      /*
       // xor payload
       for( i = 0; i < Length; i++ )
       {
          Return.payload[i] = (byte)(Fec.Payload[i] ^ Rtp.payload[i]);
       }
+      */
 
       return Return;
    }
