@@ -667,6 +667,8 @@ public class Client
 
                   this.FecPacketList.remove(0);
 
+                  // TODO
+
                   return this.LastPacket;
                }
                else
@@ -764,6 +766,8 @@ public class Client
                this.LoggerObj.writeString(Integer.toString(this.LastPacket.SequenceNumber));
 
                this.LoggerObj.writeString("  [ok  ] reconstructed from FEC and next next Packet");
+
+               // TODO
 
                return this.LastPacket;
             }

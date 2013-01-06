@@ -176,15 +176,35 @@ public class FecPacket
       // allocate payload length
       Return.payload = new byte[RecoveredLength];
 
-      for( i = 0; i < RecoveredLength; i++ )
+      if( RecoveredLength <= Fec.Payload.length )
       {
-         Return.payload[i] = Fec.Payload[i];
-      }
+         for( i = 0; i < RecoveredLength; i++ )
+         {
+            Return.payload[i] = Fec.Payload[i];
+         }
 
-      for( i = 0; i < min(RecoveredLength, Rtp.payload.length); i++ )
-      {
-         Return.payload[i] ^= Rtp.payload[i];
+         for( i = 0; i < min(RecoveredLength, Rtp.payload.length); i++ )
+         {
+            Return.payload[i] ^= Rtp.payload[i];
+         }
       }
+      else
+      {
+         System.out.println("  Special path");
+
+         for( i = 0; i < min(RecoveredLength, Rtp.payload.length); i++ )
+         {
+            Return.payload[i] = Rtp.payload[i];
+         }
+         
+         for( i = 0; i < min(RecoveredLength, Fec.Payload.length); i++ )
+         {
+            Return.payload[i] ^= Fec.Payload[i];
+         }
+      }
+      
+
+      
 
 
       /*
