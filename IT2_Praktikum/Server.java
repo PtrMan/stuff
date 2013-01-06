@@ -250,6 +250,15 @@ public class Server extends JFrame implements ActionListener
             //Builds an RTPpacket object containing the frame
             RTPpacket rtp_packet = new RTPpacket(MJPEG_TYPE, imagenb, imagenb*FRAME_PERIOD, buf, image_length);
 
+            for( int i = 0; i < 5; i++ )
+            {
+               System.out.println("");
+            }
+
+            //System.out.print("Payload dump for SequenceNumber ");
+            //System.out.println(rtp_packet.SequenceNumber);
+            //System.out.print(rtp_packet.dumpPayloadBinary());
+
             if( this.FirstRtpPacket )
             {
                this.FirstRtpPacket = false;
@@ -260,10 +269,8 @@ public class Server extends JFrame implements ActionListener
 
                byte[] FecPacketContent = RTPpacket.buildFecPacket(this.LastRtpPacket, rtp_packet, 0 /* TODO */, rtp_packet.TimeStamp);
 
-               // selftest
-               /*
                FecPacket TestFecPacket = FecPacket.deSerilize(FecPacketContent, FecPacketContent.length);
-
+               /*               
                RTPpacket ReconstructedRtp = FecPacket.reconstruct(TestFecPacket, rtp_packet);
                byte[] ReconstructedRtpBytes = ReconstructedRtp.getComplete();
 
@@ -299,6 +306,9 @@ public class Server extends JFrame implements ActionListener
 
                System.exit(0);
                */
+
+               //System.out.print("Send FEC with sn-base ");
+               //System.out.println(TestFecPacket.SnBase);
 
                // send the packet as a DatagramPacket over the UDP socket 
                // senddp = new DatagramPacket(packet_bits, packet_length, ClientIPAddr, RTP_dest_port);

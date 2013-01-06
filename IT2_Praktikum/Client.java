@@ -94,6 +94,9 @@ public class Client
 
    Logger LoggerObj;
 
+   // for testing
+   boolean WasCorrected = false;
+
    public Client()
    {
       this.LoggerObj = new Logger();
@@ -561,6 +564,8 @@ public class Client
    {
       int i;
 
+      this.WasCorrected = false;
+
       this.LoggerObj.writeString("getNextPacket()");
 
       this.LoggerObj.writeString("  [info] length of FEC queue " + Integer.toString(this.FecPacketList.size()) );
@@ -667,8 +672,6 @@ public class Client
 
                   this.FecPacketList.remove(0);
 
-                  // TODO
-
                   return this.LastPacket;
                }
                else
@@ -760,14 +763,22 @@ public class Client
 
             if( ( ((FecPacket)(this.FecPacketList.get(0))).SnBase == this.CurrentPlaySequenceNumber ) )
             {
-               this.LastPacket = FecPacket.reconstruct( (FecPacket)(this.FecPacketList.get(0)), CurrentPacket );
+               this.LastPacket = FecPacket.reconstruct( (FecPacket)(this.FecPacketList.get(0)), this.LastPacket );
+
+               /*this.LoggerObj.writeString(
+               "SequenceNumber: " + this.LastPacket.SequenceNumber
+               );
+               this.LoggerObj.writeString(this.LastPacket.dumpPayloadBinary());*/
+               
+               this.LoggerObj.writeString("  [info] Sequence number before " + Integer.toString(this.CurrentPlaySequenceNumber));
                this.CurrentPlaySequenceNumber = this.LastPacket.SequenceNumber;
+               this.LoggerObj.writeString("  [info] Sequence number after " + Integer.toString(this.CurrentPlaySequenceNumber));
 
                this.LoggerObj.writeString(Integer.toString(this.LastPacket.SequenceNumber));
 
                this.LoggerObj.writeString("  [ok  ] reconstructed from FEC and next next Packet");
 
-               // TODO
+               this.WasCorrected = true;
 
                return this.LastPacket;
             }

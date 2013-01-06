@@ -390,4 +390,24 @@ public class RTPpacket
          return(256+nb);
       }
    }
+
+   public String dumpPayloadBinary()
+   {
+      String Return = "";
+      int i;
+
+      for( i = 0; i < this.payload_size; i++ )
+      {
+         Return = Return + Integer.toString(this.payload[i]) + " ";
+
+         if( i != 0 && (i%16)==0 )
+         {
+            Return += "\n";
+         }
+      }
+      
+      Return += "\n";
+
+      return Return;
+   }
 }
