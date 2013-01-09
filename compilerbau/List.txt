@@ -1,3 +1,3 @@
 Parser.d Lexer.d NameListObject.d NameListConst.d NameListVariable.d NameListProcedure.d Nullable.d Compiler.d Line.d Hashtable.d Stack.d Token.d
 
-"C:\Users\rob3\files\Programme\dmd2\windows\bin\dmd" Compiler.d Parser.d Lexer.d NameListObject.d NameListConst.d NameListVariable.d NameListProcedure.d Nullable.d Line.d Hashtable.d Stack.d Token.d CodeGenerator.d
+"C:\Users\rob3\files\Programme\dmd2\windows\bin\dmd" Compiler.d Parser.d Lexer.d NameListObject.d NameListConst.d NameListVariable.d NameListProcedure.d Nullable.d Line.d Hashtable.d Stack.d Token.d CodeGenerator.d EscapedString.d

@@ -1,24 +1,46 @@
-import Token : Token;
 
 import std.stdio : writeln;
 import std.conv : convertTo = parse, ConvOverflowException;
 import std.string : stringCompare = icmp, stringIndexOf = indexOf;
 
+import Token : Token;
+import EscapedString : EscapedString;
+
 class Lexer
 {
    class TableElement
    {
+      enum EnumWriteType
+      {
+         NOWRITE,
+         NORMAL,
+         ESCAPED
+      }
+
       public bool Terminate;
-      public bool Write;
+      public EnumWriteType Write;
       public bool Read;
 
       public uint FollowState;
 
 
-      this(bool Read, bool Write, bool Terminate, uint FollowState)
+      this(bool Read, uint Write, bool Terminate, uint FollowState)
       {
          this.Read        = Read;
-         this.Write       = Write;
+
+         if( Write == 0 )
+         {
+            this.Write = EnumWriteType.NOWRITE;
+         }
+         else if( Write == 1 )
+         {
+            this.Write = EnumWriteType.NORMAL;
+         }
+         else
+         {
+            this.Write = EnumWriteType.ESCAPED;
+         }
+
          this.Terminate   = Terminate;
          this.FollowState = FollowState;
       }
@@ -35,19 +57,20 @@ class Lexer
       // fill the Lexer Table
 
       this.LexerTable = [
-      //      /-----        Sonderzeichen        -----\  /-----          ziff                -----\  /-----         buchstabe           -----\  /-----           :                 -----\  /-----            =                -----\  /-----          <                  -----\  /-----         >                   -----\  /-----            Steuerz.         -----\  /-----            "                -----\
-      /*   0 */new TableElement(true , true , true ,  0), new TableElement(true , true , false,  2), new TableElement(true , true , false,  1), new TableElement(true , true , false,  3), new TableElement(true , true , true ,  0), new TableElement(true , true , false,  4), new TableElement(true , true , false,  5), new TableElement(true , false, false,  0), new TableElement(true , false, false, 10), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0),
-      /*   1 */new TableElement(false, false, true ,  0), new TableElement(true , true , false,  1), new TableElement(true , true , false,  1), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0),
-      /*   2 */new TableElement(false, false, true ,  0), new TableElement(true , true , false,  2), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0),                                                                                                                                                                                                                                                                                                                                                      
-      /*   3 */new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(true , true , false,  6), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), 
-      /*   4 */new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(true , true , false,  /*6*/7), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), 
-      /*   5 */new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(true , true , false,  8), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), 
-      /*   6 */new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0),
-      /*   7 */new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0),
-      /*   8 */new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0),
-      /*   9 */new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0),
-      /*  10 */new TableElement(true , true , false, 10), new TableElement(true , true , false, 10), new TableElement(true , true , false, 10), new TableElement(true , true , false, 10), new TableElement(true , true , false, 10), new TableElement(true , true , false, 10), new TableElement(true , true , false, 10), new TableElement(true , true , false, 10), new TableElement(false, false, true ,  0), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), 
-      /*  11 */new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), //new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0), new TableElement(false, false, true ,  0)
+      //                    /-----       Sonderzeichen        -----\  /-----        ziff              -----\  /-----       buchstabe         -----\  /-----         :               -----\  /-----             =           -----\  /-----         <               -----\  /-----         >               -----\  /-----          Steuerz.       -----\  /-----           "             -----\  /-----             \             -----\
+      /*   0 start        */new TableElement(true ,    1, true ,  0), new TableElement(true ,  1, false,  2), new TableElement(true , 1, false,  1), new TableElement(true , 1, false,  3), new TableElement(true , 1, true ,  0), new TableElement(true , 1, false,  4), new TableElement(true , 1, false,  5), new TableElement(true , 0, false,  0), new TableElement(true , 0, false, 10), new TableElement(false, 0, true, 0),
+      /*   1              */new TableElement(false,    0, true ,  0), new TableElement(true ,  1, false,  1), new TableElement(true , 1, false,  1), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true, 0),
+      /*   2              */new TableElement(false,    0, true ,  0), new TableElement(true ,  1, false,  2), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true, 0),
+      /*   3              */new TableElement(false,    0, true ,  0), new TableElement(false,  0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(true , 1, false,  6), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true, 0),
+      /*   4              */new TableElement(false,    0, true ,  0), new TableElement(false,  0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(true , 1, false,  7), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true, 0),
+      /*   5              */new TableElement(false,    0, true ,  0), new TableElement(false,  0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(true , 1, false,  8), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0),      new TableElement(false, 0, true, 0),
+      /*   6              */new TableElement(false,    0, true ,  0), new TableElement(false,  0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true, 0),
+      /*   7              */new TableElement(false,    0, true ,  0), new TableElement(false,  0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true, 0),
+      /*   8              */new TableElement(false,    0, true ,  0), new TableElement(false,  0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true, 0),
+      /*   9 ":" read     */new TableElement(false,    0, true ,  0), new TableElement(false,  0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true, 0),
+      /*  10 inside "..." */new TableElement(true ,    1, false, 10), new TableElement(true ,  1, false, 10), new TableElement(true , 1, false, 10), new TableElement(true , 1, false, 10), new TableElement(true , 1, false, 10), new TableElement(true , 1, false, 10), new TableElement(true , 1, false, 10), new TableElement(true , 1, false, 10), new TableElement(false, 0, true ,  0), new TableElement(true , 0, false, 12),
+      /*  11 not used     */new TableElement(false,    0, true ,  0), new TableElement(false,  0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true, 0),
+      /*  12 escaped char */new TableElement(false,    0, true ,  0), new TableElement(false,  0, true ,  0), new TableElement(true , 2, false, 10), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(false, 0, true ,  0), new TableElement(true , 2, false, 10), new TableElement(true , 2, false , 10)
       ];
 
       this.TypeTable =
@@ -56,16 +79,10 @@ class Lexer
        /* 20 */ 7,  0,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
        /* 30 */ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  3,  0,  5,  4,  6,  0,
        /* 40 */ 0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
-       /* 50 */ 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,
+       /* 50 */ 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  9,  0,  0,  0,
        /* 60 */ 0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
        /* 70 */ 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0
       ];
-         
-
-      // z0  : start
-      // z3  : ":" read
-      // z10 : inside "..."
-      // z11 : end of "..."
    }
    
    public void setSource(string Source)
@@ -104,7 +121,7 @@ class Lexer
          return Return;
       }
 
-      string TempContent;
+      EscapedString TempContent;
       
       bool  FirstSign = true;
 
@@ -156,17 +173,33 @@ class Lexer
             return Return; // error
          }
          
-         //writeln("State: ", State);
-         //writeln("SignType: ", SignType);
-         //writeln("---");
+         writeln("State: ", State);
+         writeln("SignType: ", SignType);
+         writeln("---");
 
          // lookup the SignType in the LexerTable
          
-         LexerTableElement = this.LexerTable[State*/*12*/9 + SignType];
+         LexerTableElement = this.LexerTable[State*10 + SignType];
 
-         if( LexerTableElement.Write )
+         if( LexerTableElement.Write == TableElement.EnumWriteType.NOWRITE )
          {
-            TempContent ~= Sign;
+            // nothing
+         }
+         else if( LexerTableElement.Write == TableElement.EnumWriteType.NORMAL )
+         {
+            TempContent.append(Sign, false);
+
+            if( FirstSign )
+            {
+               OutputToken.Line = this.ActualLine;
+               OutputToken.Column = this.ActualColumn;
+            }
+
+            FirstSign = false;
+         }
+         else if( LexerTableElement.Write == TableElement.EnumWriteType.ESCAPED )
+         {
+            TempContent.append(Sign, true);
 
             if( FirstSign )
             {
@@ -207,7 +240,9 @@ class Lexer
       {
          uint Index;
 
-         Index = stringIndexOf("+-*/;,!?.=()#", TempContent);
+         assert(TempContent.getContent().length == 1, "The Length of TempContent must be 1!");
+
+         Index = stringIndexOf("+-*/;,!?.=()#", TempContent.getContent()[0].Char);
 
          if( Index != -1 )
          {
@@ -227,11 +262,11 @@ class Lexer
          bool IsKeyword;
          uint KeywordIndex;
 
-         this.getKeyword(TempContent, IsKeyword, KeywordIndex);
+         this.getKeyword(TempContent.convertToString(), IsKeyword, KeywordIndex);
          if( !IsKeyword )
          {
             OutputToken.Type = Token.EnumType.IDENTIFIER;
-            OutputToken.ContentString = TempContent;
+            OutputToken.ContentString = TempContent.convertToString();
          }
          else
          {
@@ -244,7 +279,7 @@ class Lexer
          int Number;
          bool CalleeSuccess;
          
-         Number = convertStringToNumber(CalleeSuccess, TempContent);
+         Number = convertStringToNumber(CalleeSuccess, TempContent.convertToString());
 
          if( !CalleeSuccess )
          {
@@ -291,16 +326,16 @@ class Lexer
          OutputToken.Type = Token.EnumType.OPERATION;
          OutputToken.ContentOperation = Token.EnumOperation.UNEQUAL;
       }
-      else if( State == 10 )
+      /*else if( State == 10 )
       {
          // syntax error
 
          OutputToken.Type = Token.EnumType.ERROR;
-      }
-      else if( State == 11 ) // string , "..."
+      }*/
+      else if( State == 10 ) // string , "..."
       {
          OutputToken.Type = Token.EnumType.STRING;
-         OutputToken.ContentString = TempContent;
+         OutputToken.ContentEscapedString = TempContent;
       }
       else
       {
@@ -371,7 +406,7 @@ class Lexer
    
    private uint Index = 0;
    
-   private TableElement[12*9/*12*/] LexerTable;
+   private TableElement[13*10] LexerTable;
 
    private uint[16*8] TypeTable;
    

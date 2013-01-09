@@ -6,8 +6,6 @@ import Parser : Parser;
 
 void main(string[] Args)
 {
-   Lexer.EnumLexerCode LexerReturnCode;
-   Token CurrentToken = new Token();
    Parser ParserObject;
    Lexer L;
    string ErrorMessage;
@@ -36,6 +34,26 @@ void main(string[] Args)
    }
 
    L.setSource(Content);
+
+   // TODO< output tokens >
+   Token CurrentToken = new Token();
+   for(;;)
+   {
+      Lexer.EnumLexerCode LexerCode = L.getNextToken(CurrentToken);
+
+      if( LexerCode != Lexer.EnumLexerCode.OK )
+      {
+         writeln("lexing failed!");
+         return;
+      }
+
+      CurrentToken.debugIt();
+
+      if( CurrentToken.Type == Token.EnumType.EOF )
+      {
+         break;
+      }
+   }
 
    CalleeSuccess = ParserObject.parse(ErrorMessage);
    

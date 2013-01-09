@@ -3,6 +3,8 @@ import std.stdio : writeln;
 // exceptions?
 import std.conv : to;
 
+import EscapedString : EscapedString;
+
 class Token
 {
    public enum EnumType
@@ -107,9 +109,13 @@ class Token
       {
          writeln(KeywordString[this.ContentKeyword]);
       }
-      else if( (this.Type == EnumType.IDENTIFIER) || (this.Type == EnumType.STRING) )
+      else if( this.Type == EnumType.IDENTIFIER )
       {
          writeln(this.ContentString);
+      }
+      else if( this.Type == EnumType.STRING )
+      {
+         writeln(this.ContentEscapedString.convertToString());
       }
 
       writeln("Line   : ", this.Line);
@@ -159,6 +165,7 @@ class Token
    }
 
    public string ContentString;
+   public EscapedString ContentEscapedString;
    public EnumOperation ContentOperation = EnumOperation.INTERNALERROR;
    public int ContentNumber = 0;
    public EnumKeyword ContentKeyword;
