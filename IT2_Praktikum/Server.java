@@ -75,6 +75,8 @@ public class Server extends JFrame implements ActionListener
 
    boolean FirstRtpPacket = true;
 
+   boolean PacketNumber = true;
+
    //--------------------------------
    //Constructor
    //--------------------------------
@@ -281,61 +283,64 @@ public class Server extends JFrame implements ActionListener
             }
             else
             {
+               PacketNumber = !PacketNumber;
+
                // calculate and send FecPacket
-
-               byte[] FecPacketContent = RTPpacket.buildFecPacket(this.LastRtpPacket, rtp_packet, 0 /* TODO */, rtp_packet.TimeStamp);
-
-               FecPacket TestFecPacket = FecPacket.deSerilize(FecPacketContent, FecPacketContent.length);
-               /*               
-               RTPpacket ReconstructedRtp = FecPacket.reconstruct(TestFecPacket, rtp_packet);
-               byte[] ReconstructedRtpBytes = ReconstructedRtp.getComplete();
-
-               for( int i = 0; i < ReconstructedRtpBytes.length; i++ )
+               if( PacketNumber )
                {
-               }
-               System.out.print("\n");
+                  byte[] FecPacketContent = RTPpacket.buildFecPacket(this.LastRtpPacket, rtp_packet, 0 /* TODO */, rtp_packet.TimeStamp);
 
-               byte[] OrginalRtpBytes = this.LastRtpPacket.getComplete();
-               
-               if( ReconstructedRtpBytes.length != OrginalRtpBytes.length )
-               {
-                  System.out.println("unequal size!");
-                  System.exit(0);
-               }
+                  FecPacket TestFecPacket = FecPacket.deSerilize(FecPacketContent, FecPacketContent.length);
+                  /*               
+                  RTPpacket ReconstructedRtp = FecPacket.reconstruct(TestFecPacket, rtp_packet);
+                  byte[] ReconstructedRtpBytes = ReconstructedRtp.getComplete();
 
-               for( int i = 0; i < OrginalRtpBytes.length; i++ )
-               {
-                  System.out.print(ReconstructedRtpBytes[i]);
-                  System.out.print(" ");
-                  System.out.print(OrginalRtpBytes[i]);
+                  for( int i = 0; i < ReconstructedRtpBytes.length; i++ )
+                  {
+                  }
                   System.out.print("\n");
 
-                  if( OrginalRtpBytes[i] != ReconstructedRtpBytes[i] )
+                  byte[] OrginalRtpBytes = this.LastRtpPacket.getComplete();
+               
+                  if( ReconstructedRtpBytes.length != OrginalRtpBytes.length )
                   {
-                     System.out.println(i);
-
-                     System.out.println("mismatch!");
+                     System.out.println("unequal size!");
                      System.exit(0);
                   }
-               }
-               System.out.print("all ok\n");
 
-               System.exit(0);
-               */
+                  for( int i = 0; i < OrginalRtpBytes.length; i++ )
+                  {
+                     System.out.print(ReconstructedRtpBytes[i]);
+                     System.out.print(" ");
+                     System.out.print(OrginalRtpBytes[i]);
+                     System.out.print("\n");
 
-               //System.out.print("Send FEC with sn-base ");
-               //System.out.println(TestFecPacket.SnBase);
+                     if( OrginalRtpBytes[i] != ReconstructedRtpBytes[i] )
+                     {
+                        System.out.println(i);
 
-               // send the packet as a DatagramPacket over the UDP socket 
-               // senddp = new DatagramPacket(packet_bits, packet_length, ClientIPAddr, RTP_dest_port);
+                        System.out.println("mismatch!");
+                        System.exit(0);
+                     }
+                  }
+                  System.out.print("all ok\n");
+                  
+                  System.exit(0);
+                  */
+
+                  //System.out.print("Send FEC with sn-base ");
+                  //System.out.println(TestFecPacket.SnBase);
+
+                  // send the packet as a DatagramPacket over the UDP socket 
+                  // senddp = new DatagramPacket(packet_bits, packet_length, ClientIPAddr, RTP_dest_port);
                
-               if( this.Rand.nextInt(100) > (int)(this.LostRate*100.0f) )
-               {
-                  senddp = new DatagramPacket(FecPacketContent, FecPacketContent.length, ClientIPAddr, RTP_dest_port);
+                  if( this.Rand.nextInt(100) > (int)(this.LostRate*100.0f) )
+                  {
+                     senddp = new DatagramPacket(FecPacketContent, FecPacketContent.length, ClientIPAddr, RTP_dest_port);
 
-                  RTPsocket.send(senddp);
+                     RTPsocket.send(senddp);
+                  }
                }
-
             }
 
             this.LastRtpPacket = rtp_packet;

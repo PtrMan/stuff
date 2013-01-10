@@ -23,15 +23,8 @@ public class Client
    JButton pauseButton = new JButton("Pause");
    JButton tearButton = new JButton("Teardown");
    JPanel mainPanel = new JPanel();
-   JPanel ButtonPanel = new JPanel();
-
-   JLabel IconLabel = new JLabel();
-   JLabel LabelTransmittedPackets = new JLabel();
-   JLabel LabelLostPackets = new JLabel();
-   JLabel LabelLostRatio = new JLabel();
-   JLabel LabelFecCorrected = new JLabel();
-   JLabel LabelDatarate = new JLabel();
-
+   JPanel buttonPanel = new JPanel();
+   JLabel iconLabel = new JLabel();
    ImageIcon icon;
  
  
@@ -106,6 +99,8 @@ public class Client
    {
       this.LoggerObj = new Logger();
       this.LoggerObj.openLog("log0.txt");
+      
+      this.LoggerObj.writeString("Test");
    }
 
    public static void main(String Arguments[]) throws Exception
@@ -179,40 +174,28 @@ public class Client
       );
 
       // Buttons
-      this.ButtonPanel.setLayout(new GridLayout(1,0));
-      this.ButtonPanel.add(setupButton);
-      this.ButtonPanel.add(playButton);
-      this.ButtonPanel.add(pauseButton);
-      this.ButtonPanel.add(tearButton);
+      buttonPanel.setLayout(new GridLayout(1,0));
+      buttonPanel.add(setupButton);
+      buttonPanel.add(playButton);
+      buttonPanel.add(pauseButton);
+      buttonPanel.add(tearButton);
       setupButton.addActionListener(new setupButtonListener());
       playButton.addActionListener(new playButtonListener());
       pauseButton.addActionListener(new pauseButtonListener());
       tearButton.addActionListener(new tearButtonListener());
 
       // Image display label
-      this.IconLabel.setIcon(null);
+      iconLabel.setIcon(null);
     
+      // frame layout
       mainPanel.setLayout(null);
-      mainPanel.add(this.IconLabel);
-      mainPanel.add(this.ButtonPanel);
-      mainPanel.add(this.LabelTransmittedPackets);
-      mainPanel.add(this.LabelLostPackets);
-      mainPanel.add(this.LabelLostRatio);
-      mainPanel.add(this.LabelFecCorrected);
-      mainPanel.add(this.LabelDatarate);
+      mainPanel.add(iconLabel);
+      mainPanel.add(buttonPanel);
+      iconLabel.setBounds(0,0,380,280);
+      buttonPanel.setBounds(0,280,380,50);
 
-      this.LabelTransmittedPackets.setText("");
-
-      this.IconLabel              .setBounds(0,0,380,280);
-      this.ButtonPanel            .setBounds(0,280,380,50);
-      this.LabelTransmittedPackets.setBounds(0,330,380,20);
-      this.LabelLostPackets       .setBounds(0,350,380,20);
-      this.LabelLostRatio         .setBounds(0,370,380,20);
-      this.LabelFecCorrected      .setBounds(0,390,380,20);
-      this.LabelDatarate          .setBounds(0,410,380,20);
-      
       f.getContentPane().add(mainPanel, BorderLayout.CENTER);
-      f.setSize(new Dimension(390,470));
+      f.setSize(new Dimension(390,370));
       f.setVisible(true);
 
       // allocate enough memory for the buffer used to receive data from the server
@@ -545,7 +528,7 @@ public class Client
       
          // display the image as an ImageIcon object
          icon = new ImageIcon(image);
-         this.IconLabel.setIcon(icon);
+         iconLabel.setIcon(icon);
 
          this.CurrentPlayingTime += 40;
       }
@@ -565,17 +548,11 @@ public class Client
          float PacketLostRatio = ((float)(MaxSequenceNumber-this.ReceivedPackets))/(float)this.ReceivedPackets * 100.0f;
 
          System.out.println("Statistics:");
-         /*System.out.println("Transmitted packets: " + this.ReceivedPackets);
+         System.out.println("Transmitted packets: " + this.ReceivedPackets);
          System.out.println("Lost packets       : " + (MaxSequenceNumber-this.ReceivedPackets));
          System.out.println("Packetlost-ratio   : " + PacketLostRatio + "%");
          System.out.println("FEC corrected      : " + FecCorrectedPackets);
-         System.out.println("Datarate           : " + this.Datarate);*/
-
-         this.LabelTransmittedPackets.setText("Transmitted packets: " + this.ReceivedPackets);
-         this.LabelLostPackets       .setText("Lost packets       : " + (MaxSequenceNumber-this.ReceivedPackets));
-         this.LabelLostRatio         .setText("Packetlost-ratio   : " + PacketLostRatio + "%");
-         this.LabelFecCorrected      .setText("FEC corrected      : " + FecCorrectedPackets);
-         this.LabelDatarate          .setText("Datarate           : " + this.Datarate);
+         System.out.println("Datarate           : " + this.Datarate);
 
          this.Datarate = 0;
 
@@ -791,34 +768,9 @@ public class Client
                " CurrentPacket.SequenceNumber " + Integer.toString(CurrentPacket.SequenceNumber)
             );
 
-            if( ((FecPacket)(this.FecPacketList.get(0))).SnBase     == this.CurrentPlaySequenceNumber )
+            if( ( ((FecPacket)(this.FecPacketList.get(0))).SnBase == this.CurrentPlaySequenceNumber ) )
             {
                this.LastPacket = FecPacket.reconstruct( (FecPacket)(this.FecPacketList.get(0)), this.LastPacket );
-
-               /*this.LoggerObj.writeString(
-               "SequenceNumber: " + this.LastPacket.SequenceNumber
-               );
-               this.LoggerObj.writeString(this.LastPacket.dumpPayloadBinary());*/
-               
-               this.LoggerObj.writeString("  [info] Sequence number before " + Integer.toString(this.CurrentPlaySequenceNumber));
-               this.CurrentPlaySequenceNumber = this.LastPacket.SequenceNumber;
-               this.LoggerObj.writeString("  [info] Sequence number after " + Integer.toString(this.CurrentPlaySequenceNumber));
-
-               this.LoggerObj.writeString(Integer.toString(this.LastPacket.SequenceNumber));
-
-               this.LoggerObj.writeString("  [ok  ] reconstructed from FEC and next next Packet");
-
-               this.ReceivedPackets++;
-               this.FecCorrectedPackets++;
-
-               return this.LastPacket;
-            }
-            else if(
-               (((FecPacket)(this.FecPacketList.get(0))).SnBase     == this.CurrentPlaySequenceNumber + 1) &&
-               (CurrentPacket.SequenceNumber == this.CurrentPlaySequenceNumber + 2)
-            )
-            {
-               this.LastPacket = FecPacket.reconstruct( (FecPacket)(this.FecPacketList.get(0)), CurrentPacket );
 
                /*this.LoggerObj.writeString(
                "SequenceNumber: " + this.LastPacket.SequenceNumber
