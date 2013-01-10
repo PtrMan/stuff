@@ -130,7 +130,7 @@ class Token
       {
          return OperationPlain[this.ContentOperation];
       }
-      else if( (this.Type == EnumType.IDENTIFIER) || (this.Type == EnumType.STRING) )
+      else if( this.Type == EnumType.IDENTIFIER )
       {
          return this.ContentString;
       }
@@ -143,6 +143,10 @@ class Token
       {
          return KeywordString[this.ContentKeyword];
       }
+      else if( this.Type == EnumType.STRING )
+      {
+         return this.ContentEscapedString.convertToString();
+      }
       
 
       return "";
@@ -154,6 +158,7 @@ class Token
 
       Return = new Token();
       Return.ContentString = this.ContentString;
+      Return.ContentEscapedString = ContentEscapedString;
       Return.ContentOperation = this.ContentOperation;
       Return.ContentNumber = this.ContentNumber;
       Return.ContentKeyword = this.ContentKeyword;

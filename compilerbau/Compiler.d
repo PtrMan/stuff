@@ -36,6 +36,7 @@ void main(string[] Args)
    L.setSource(Content);
 
    // TODO< output tokens >
+   /*
    Token CurrentToken = new Token();
    for(;;)
    {
@@ -54,6 +55,9 @@ void main(string[] Args)
          break;
       }
    }
+   
+   return;
+   */
 
    CalleeSuccess = ParserObject.parse(ErrorMessage);
    

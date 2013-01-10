@@ -4,6 +4,7 @@ import std.file : write;
 import std.stdio : writeln;
 
 import Stack : Stack;
+import EscapedString : EscapedString;
 
 class CodeGenerator
 {
@@ -193,21 +194,6 @@ class CodeGenerator
          // nothing
       }
 
-      /*
-      if( Parameters > 0 )
-      {
-         writeln("   Parameters[0]=", Parameter1);
-      }
-      if( Parameters > 1 )
-      {
-         writeln("   Parameters[1]=", Parameter2);
-      }
-      if( Parameters == 3 )
-      {
-         writeln("   Parameters[2]=", Parameter3);
-      }
-      */
-
       foreach( int Parameter; Parameters )
       {
          this.write2(this.Bytecode, cast(short)Parameter);
@@ -231,6 +217,39 @@ class CodeGenerator
 
       Place ~= (cast(ubyte*)DataPtr)[0];
       Place ~= (cast(ubyte*)DataPtr)[1];
+   }
+
+   public void writeString(EscapedString String, out bool Success)
+   {
+      uint i;
+      bool CalleeSuccess;
+
+      Success = false;
+
+      // write string out
+      foreach( EscapedString.EscapedChar Char; String.getContent() )
+      {
+         if( Char.Escaped )
+         {
+            if( Char.Char == 'n' ) // new line
+            {
+               this.write1(this.Bytecode, 10);
+            }
+            else
+            {
+               return;
+            }
+         }
+         else
+         {
+            this.write1(this.Bytecode, Char.Char);
+         }
+      }
+
+      // write terminating 0
+      this.write1(this.Bytecode, 0);
+
+      Success = true;
    }
 
    private void write1(ref ubyte Place[], int Data)
@@ -264,13 +283,6 @@ class CodeGenerator
       this.OutputBytecode[1] = cast(ubyte)(NumberOfProcedures >> 8);
       this.OutputBytecode[2] = cast(ubyte)(NumberOfProcedures >> 16);
       this.OutputBytecode[3] = cast(ubyte)(NumberOfProcedures >> 24);
-
-      /*
-      // append Bytecode
-      foreach( ubyte Byte; this.Bytecode )
-      {
-         this.OutputBytecode ~= Byte;
-      }*/
 
       // append constantblock
       foreach( ubyte Byte; ConstantBlock )

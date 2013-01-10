@@ -850,6 +850,32 @@ class Parser
          Success = true;
       }
 
+      void outputStringCallback(ref Parser ParserObj, ref Token CurrentToken, ref bool Success, ref string ErrorMessage)
+      {
+         bool CalleeSuccess;
+
+         Success = false;
+
+         ParserObj.CodeGen.writeOpCode(CalleeSuccess, CodeGenerator.EnumOpCodes.PUTSTRING, []);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Internal Error";
+            return;
+         }
+
+         // write the content of the string out
+         ParserObj.CodeGen.writeString(CurrentToken.ContentEscapedString, CalleeSuccess);
+
+         if( !CalleeSuccess )
+         {
+            ErrorMessage = "Invalid String!";
+            return;
+         }
+
+         Success = true;
+      }
+
       //////////
       // Condition
       //////////
@@ -1012,20 +1038,20 @@ class Parser
       /*  34 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.SEMICOLON   , &nothing, new Nullable!uint(false,  33), new Nullable!uint(false,  35));//NullUint                     );
       /*  35 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.END           , &nothing, new Nullable!uint(false,  23), NullUint                     );
       /*  36 */this.Arcs ~= new Arc(Parser.Arc.EnumType.KEYWORD  , cast(uint)Token.EnumKeyword.CALL          , &nothing, new Nullable!uint(false,  37), new Nullable!uint(false,  38));
-      /*  37 */this.Arcs ~= new Arc(Parser.Arc.EnumType.TOKEN    , cast(uint)Token.EnumType.IDENTIFIER       , &statementCall, new Nullable!uint(false,  23), NullUint                     );
-      /*  38 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.INPUT       , &nothing, new Nullable!uint(false,  39), new Nullable!uint(false,  40));
-      /*  39 */this.Arcs ~= new Arc(Parser.Arc.EnumType.TOKEN    , cast(uint)Token.EnumType.IDENTIFIER       , &inputCallback, new Nullable!uint(false,  23), NullUint                     );
-      /*  40 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.OUTPUT      , &nothing, new Nullable!uint(false,  41), new Nullable!uint(false,  23));
-      /*  41 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 50 /* expression */                       , &outputCallback, new Nullable!uint(false,  23), NullUint                     );
+      /*  37 */this.Arcs ~= new Arc(Parser.Arc.EnumType.TOKEN    , cast(uint)Token.EnumType.IDENTIFIER       , &statementCall       , new Nullable!uint(false,  23), NullUint                     );
+      /*  38 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.INPUT       , &nothing             , new Nullable!uint(false,  39), new Nullable!uint(false,  40));
+      /*  39 */this.Arcs ~= new Arc(Parser.Arc.EnumType.TOKEN    , cast(uint)Token.EnumType.IDENTIFIER       , &inputCallback       , new Nullable!uint(false,  23), NullUint                     );
+      /*  40 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.OUTPUT      , &nothing             , new Nullable!uint(false,  42), NullUint                     );
+      /*  41 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ARC      , 50 /* expression */                       , &outputCallback      , new Nullable!uint(false,  23), NullUint                     );
+      /*  42 */this.Arcs ~= new Arc(Parser.Arc.EnumType.TOKEN    , cast(uint)Token.EnumType.STRING           , &outputStringCallback, new Nullable!uint(false,  23), new Nullable!uint(false,  41));
 
-      /*  42 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing, NullUint                     , NullUint                     );
-      /*  43 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing, NullUint                     , NullUint                     );
-      /*  44 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing, NullUint                     , NullUint                     );
-      /*  45 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing, NullUint                     , NullUint                     );
-      /*  46 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing, NullUint                     , NullUint                     );
-      /*  47 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing, NullUint                     , NullUint                     );
-      /*  48 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing, NullUint                     , NullUint                     );
-      /*  49 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing, NullUint                     , NullUint                     );
+      /*  43 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing             , NullUint                      , NullUint                     );
+      /*  44 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing             , NullUint                      , NullUint                     );
+      /*  45 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing             , NullUint                      , NullUint                     );
+      /*  46 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing             , NullUint                      , NullUint                     );
+      /*  47 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing             , NullUint                      , NullUint                     );
+      /*  48 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing             , NullUint                      , NullUint                     );
+      /*  49 */this.Arcs ~= new Arc(Parser.Arc.EnumType.ERROR    , 0                                         , &nothing             , NullUint                      , NullUint                     );
       
       // Expression
       /*  50 */this.Arcs ~= new Arc(Parser.Arc.EnumType.OPERATION, cast(uint)Token.EnumOperation.MINUS       , &nothing, new Nullable!uint(false,  51), new Nullable!uint(false,  52));
